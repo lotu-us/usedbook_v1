@@ -1,6 +1,7 @@
 package thwjd.usedbook.entity;
 
 import lombok.Data;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class Member {
     @NotBlank
     @Size(min=2, message = "2글자 이상이어야합니다.")
     private String password;
+
 
     public Member(){
 
