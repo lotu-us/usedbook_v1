@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('메인') ">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md custom-theme" th:fragment="menu">
+    <div class="container-fluid custom-width">
+        <a class="navbar-brand" href="#" th:href="@{/}" >📖<span>책방</span></a>
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="vertical-align:baseline;">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">카테고리1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">카테고리2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">카테고리3</a>
+                </li>
+            </ul>
+        </div>
+
+        <a class="btn btn btn-success custom-loginPosition" th:href="@{/login}">LOGIN</a>
+
+    </div>
+
+
+
+</nav>
+
+
+</body>
+</html>
