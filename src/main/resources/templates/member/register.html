@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head('로그인') ">
+<head th:replace="fragments/head :: head('회원가입') ">
 </head>
 <body>
 
-<div th:replace="fragments/nav :: menu"></div>
+<div th:replace="fragments/nav :: menu('')"></div>
 
 
 <div class="d-flex justify-content-center p-5 pt-0">
   <form style="width:400px;" class="needs-validation" th:action="@{/register}" method="post" id="registerForm">
     <h1 style="text-align:center; font-weight:bold; margin-top:40px;">회원가입</h1><br>
 
-    <!-- is-invalid : input 붉은테두리, 느낌표 표시
-     invalid-feedback : 오류메시지 붉게 표시 -->
+    <!--/* is-invalid : input 붉은테두리, 느낌표 표시
+     invalid-feedback : 오류메시지 붉게 표시 */-->
 
     <div class="mb-3 has-validation">
       <label for="email" class="form-label">이메일</label>

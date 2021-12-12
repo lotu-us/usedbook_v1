@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head('메인') ">
+<head>
+    <div th:include="fragments/head :: head('메인') "></div>  <!--/* 다른페이지와 다르게 fragment를 head태그에 사용하지 않음. 추가적인 style을 추가하기위함 */-->
+    <link href="index.css" th:href="@{/css/index.css}" rel="stylesheet">
 </head>
 <body>
 
-<div th:replace="fragments/nav :: menu"></div>
+<div th:replace="fragments/nav :: menu('')"></div>
 
 
 <div class="banner">
@@ -16,6 +18,8 @@
         <input type="text" name="searchstr" placeholder="제목을 검색해주세요">
     </form>
 </div>
+
+<div th:replace="fragments/albums :: albums"></div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
