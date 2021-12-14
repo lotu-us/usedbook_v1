@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-  <div th:include="fragments/head :: head('회원가입완료') "></div>  <!--/* 다른페이지와 다르게 fragment를 head태그에 사용하지 않음. 추가적인 style을 추가하기위함 */-->
+  <th:block th:include="fragments/head :: head('회원가입완료') "></th:block>  <!--/* 다른페이지와 다르게 fragment를 head태그에 사용하지 않음. 추가적인 style을 추가하기위함 */-->
   <link href="register_ok.css" th:href="@{/css/register_ok.css}" rel="stylesheet">
 
 </head>
@@ -20,7 +20,7 @@
 
     <p style="text-align: center; font-size: 1.6rem; margin-top: 10px;">🎉 회원가입을 축하합니다.</p>
 
-    <a class="w-100 mt-4 btn btn-lg rounded-4 btn-primary" th:href="@{/login}">회원가입</a>
+    <a class="mt-4 btn btn-lg rounded-4 btn-primary" th:href="@{/login}">로그인하러가기</a>
   </div>
 
 

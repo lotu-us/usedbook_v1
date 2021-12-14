@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:include="fragments/head :: head('메인') "></div>  <!--/* 다른페이지와 다르게 fragment를 head태그에 사용하지 않음. 추가적인 style을 추가하기위함 */-->
+    <th:block th:include="fragments/head :: head('메인') "></th:block>  <!--/* 다른페이지와 다르게 fragment를 head태그에 사용하지 않음. 추가적인 style을 추가하기위함 */-->
     <link href="index.css" th:href="@{/css/index.css}" rel="stylesheet">
+    <th:block th:include="fragments/slider :: slider-head"></th:block>
 </head>
 <body>
 
@@ -19,10 +20,13 @@
     </form>
 </div>
 
-<div th:replace="fragments/albums :: albums"></div>
-
+<div th:replace="fragments/slider :: slider"></div>
+<br><br>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<th:block th:include="fragments/slider :: slider-script"></th:block>
+
+
 </body>
 </html>
