@@ -4,16 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import thwjd.usedbook.entity.Member;
-import thwjd.usedbook.entity.RegisterCheckResponse;
 import thwjd.usedbook.repository.MemberRepository;
 import thwjd.usedbook.service.LoginService;
 import thwjd.usedbook.service.RegisterService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j

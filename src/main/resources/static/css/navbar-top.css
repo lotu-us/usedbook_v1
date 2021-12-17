@@ -1,3 +1,4 @@
+*{ font-size:13px; }
 
 .nav-link{
     color:black;
@@ -41,10 +42,10 @@
     height:33px;
 }
 
-@media (max-width:768px){
+@media (max-width:769px){
     .custom-loginPosition{
         position:absolute;
-        top:10px;
+        top:0.5rem;
         right:70px;
     }
 }
