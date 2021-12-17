@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RegisterCheckResponse {
+public class ValidCheckResponse {
 
     private Boolean status;
     private String field;

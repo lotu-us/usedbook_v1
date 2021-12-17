@@ -29,17 +29,22 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String loginForm(){
+    public String loginForm(@ModelAttribute Member member){
+        //타임리프에서 이상하게 자꾸 오류가 생기면 member를 전달해주었는지를 확인하자
+        init();
+        log.info("All={}", memberRepository.findAll());
         return "member/login";
     }
+
     @PostMapping("/login")
     public String loginOk(@Validated @ModelAttribute Member member, BindingResult bindingResult){
-        Member login = loginService.login(member.getEmail(), member.getPassword());
-        if(login == null){
-            bindingResult.reject("loginFail", "아이디와 비밀번호를 확인해주세요");
-        }
 
-        return "index";
+        BindingResult newBindingResult = loginService.validCheck(member, bindingResult);
+        if(newBindingResult!=null && newBindingResult.hasErrors()){
+            return "member/login";
+        }else{
+            return "redirect:/";
+        }
     }
 
 
@@ -57,7 +62,7 @@ public class LoginController {
             return "member/register";
         }else {
             memberRepository.save(member);
-            log.info("All={}", memberRepository.findAll());
+            //log.info("All={}", memberRepository.findAll());
             return "redirect:/member/register_ok";
         }
     }
