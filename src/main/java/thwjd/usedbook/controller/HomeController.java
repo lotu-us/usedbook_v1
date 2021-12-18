@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import thwjd.usedbook.annotation.Login;
 import thwjd.usedbook.entity.Member;
 import thwjd.usedbook.entity.SessionConstants;
 
@@ -12,7 +13,7 @@ import thwjd.usedbook.entity.SessionConstants;
 @Controller
 public class HomeController {
     @GetMapping("/")
-    public String index(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String index(@Login Member loginMember, Model model){
 
         //세션에 회원데이터가 없으면 홈으로 이동
         if (loginMember == null) {
