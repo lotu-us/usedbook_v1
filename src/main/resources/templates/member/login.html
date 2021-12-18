@@ -39,7 +39,7 @@
 
     <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="button" onClick="$('#loginForm').submit();">로그인</button>
     <div class="text-center mt-2">
-      <a href="#" class="link-secondary mr-1" style="margin-right:20px;">비밀번호 찾기</a>
+      <a href="#" class="link-secondary mr-1" style="margin-right:20px;" th:href="@{/findPassword}">비밀번호 찾기</a>
       <a href="register.html" th:href="@{/register}" class="link-secondary">회원가입</a>
     </div>
 

@@ -30,4 +30,9 @@ public class MemberRepository {
     public List<Member> findAll(){
         return new ArrayList<>(store.values());
     }
+
+    public Optional<Member> findByEmailAndName(String email, String name){
+        return findByEmail(email)
+                .filter(m -> m.getName().equals(name));
+    }
 }

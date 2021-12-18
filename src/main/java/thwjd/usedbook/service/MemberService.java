@@ -11,15 +11,50 @@ import thwjd.usedbook.repository.MemberRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
-public class RegisterService {
+public class MemberService {
 
     @Autowired
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
-    public List validCheck(Member member, BindingResult bindingResult){
+    public BindingResult loginValidCheck(Member member, BindingResult bindingResult){
+
+        Member emailCheck = memberRepository.findByEmail(member.getEmail()).orElse(null);
+        Member emailAndpasswordCheck = memberRepository.findByEmail(member.getEmail())
+                .filter(m -> m.getPassword().equals(member.getPassword()))
+                .orElse(null);
+
+        if(bindingResult.hasFieldErrors("email")){
+            return bindingResult;
+        }
+        if(emailCheck == null){
+            bindingResult.rejectValue("email", "EmailFoundFail", "일치하는 이메일이 없습니다");
+            return bindingResult;
+        }
+        if(emailAndpasswordCheck == null){
+            bindingResult.reject("PasswordFail", "비밀번호를 확인해주세요");
+            return bindingResult;
+        }
+        return null;
+    }
+
+
+    public BindingResult findPasswordValidCheck(Member member, BindingResult bindingResult){
+        Member find = memberRepository.findByEmailAndName(member.getEmail(), member.getName()).orElse(null);
+        if(find == null) {
+            bindingResult.reject("findPasswordFail", "일치하는 회원이 없습니다.");
+            return bindingResult;
+        }
+        return null;
+    }
+
+
+
+
+    public List registerValidCheck(Member member, BindingResult bindingResult){
 
         List<ValidCheckResponse> response = new ArrayList<>();
         Member emailcheck = memberRepository.findByEmail(member.getEmail()).orElse(null);
