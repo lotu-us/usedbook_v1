@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md custom-theme" th:fragment="menu(category)">
+<nav class="navbar navbar-expand-md custom-theme" th:fragment="menu(category, loginMember)">
     <div class="container-fluid custom-width">
         <a class="navbar-brand" href="#" th:href="@{/}" >📖<span>책방</span></a>
 
@@ -29,7 +29,10 @@
             </ul>
         </div>
 
-        <a class="btn btn btn-outline-primary custom-loginPosition" th:href="@{/login}">LOGIN</a>
+        <a class="btn btn btn-outline-primary custom-loginPosition"
+
+           th:href="@{/{url}(url=${not #strings.isEmpty(loginMember)} ? 'logout':'login')}"
+           th:text="${not #strings.isEmpty(loginMember)} ? 'LOGOUT':'LOGIN'">LOGIN</a>
 
     </div>
 

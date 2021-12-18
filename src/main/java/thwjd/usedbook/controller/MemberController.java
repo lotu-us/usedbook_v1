@@ -9,9 +9,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import thwjd.usedbook.entity.Member;
+import thwjd.usedbook.entity.SessionConstants;
 import thwjd.usedbook.repository.MemberRepository;
 import thwjd.usedbook.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,27 +33,41 @@ public class MemberController {
 
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute Member member){
+    public String loginForm(@ModelAttribute Member member, HttpServletRequest request, Model model){
         //타임리프에서 이상하게 자꾸 오류가 생기면 member를 전달해주었는지를 확인하자
+        init();
         return "member/login";
     }
     @PostMapping("/login")
-    public String loginOk(@Validated @ModelAttribute Member member, BindingResult bindingResult){
+    public String loginOk(@Validated @ModelAttribute Member member, BindingResult bindingResult, HttpServletRequest request){
 
         BindingResult newBindingResult = memberService.loginValidCheck(member, bindingResult);
+
         if(newBindingResult!=null && newBindingResult.hasErrors()){
             return "member/login";
         }else{
+
+            HttpSession session = request.getSession(); // 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성하여 반환
+
+            Member loginMember = memberRepository.findByEmail(member.getEmail()).orElse(null);
+            session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMember);   // 세션에 로그인 회원 정보 보관
+
             return "redirect:/";
         }
+    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();   // 세션 날림
+        }
+        return "redirect:/";
     }
 
 
 
     @GetMapping("/findPassword")
     public String findPasswordForm(@ModelAttribute Member member){
-        init();
-        log.info("All={}", memberRepository.findAll());
         return "member/findPassword";
     }
     @PostMapping("/findPassword")
