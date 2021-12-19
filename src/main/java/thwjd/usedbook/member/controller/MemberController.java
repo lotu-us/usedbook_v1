@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import thwjd.usedbook.member.annotation.Login;
 import thwjd.usedbook.member.entity.Member;
 import thwjd.usedbook.member.entity.SessionConstants;
 import thwjd.usedbook.member.repository.MemberRepository;
@@ -109,5 +110,17 @@ public class MemberController {
     }
 
 
+
+    @GetMapping("/memberDetail")
+    public String memberDetail(@Login Member loginMember, Model model){
+        // 세션에 저장된 회원가져옴
+        model.addAttribute("loginMember", loginMember);
+        return "member/memberDetail";
+    }
+    @PostMapping("/memberDetail")
+    public String memberDetailUpdate(@ModelAttribute Member member, BindingResult bindingResult){
+
+        return "redirect:/member/memberDetail";
+    }
 
 }

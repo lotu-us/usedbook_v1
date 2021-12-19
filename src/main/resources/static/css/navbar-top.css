@@ -52,10 +52,28 @@
 
 } */
 
+
+.dropdown-menu[data-bs-popper]{
+    top:100%;
+    right:0px!important;
+    left:auto!important;
+    margin-top:0.125rem;
+    padding-right: var(--bs-gutter-x, .75rem);
+}
+
+
 @media (max-width:769px){
     .custom-loginPosition{
         position:absolute;
         top:0.55rem;
         right:4rem;
     }
+}
+
+@media screen and (max-width: 600px) {
+
+}
+
+@media screen and (max-width: 400px) {
+    *{font-size:15px;}
 }
