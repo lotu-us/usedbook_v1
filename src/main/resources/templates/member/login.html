@@ -22,7 +22,7 @@
 
 
 <div class="d-flex justify-content-center p-5 pt-0">
-  <form style="width:400px;" class="needs-validation" th:action="@{/login}" method="post" id="loginForm" >
+  <form style="width:400px;" class="needs-validation" th:action="@{/login(redirectURL=${param.redirectURL})}" method="post" id="loginForm" >
     <h1 style="text-align:center; font-weight:bold; margin-top:40px;">로그인</h1><br>
 
     <div class="form-floating mb-3">

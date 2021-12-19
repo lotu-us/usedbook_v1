@@ -29,10 +29,28 @@
             </ul>
         </div>
 
-        <a class="btn btn btn-outline-primary custom-loginPosition"
 
-           th:href="@{/{url}(url=${not #strings.isEmpty(loginMember)} ? 'logout':'login')}"
-           th:text="${not #strings.isEmpty(loginMember)} ? 'LOGOUT':'LOGIN'">LOGIN</a>
+        <div class="custom-loginPosition">
+
+            <a class="btn btn btn-outline-primary" th:href="@{/login}" th:if="${#strings.isEmpty(loginMember)}">LOGIN</a>
+
+            <div class="dropdown" th:if="${not #strings.isEmpty(loginMember)}"> <!--/*  session이 있는 경우 */-->
+                <a class="btn btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">-->
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
+                    MYPAGE
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" th:href="@{/logout}">LOGOUT</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+
+
+        </div>
 
     </div>
 

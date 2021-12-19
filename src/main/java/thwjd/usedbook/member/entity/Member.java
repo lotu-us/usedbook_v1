@@ -1,10 +1,7 @@
-package thwjd.usedbook.entity;
+package thwjd.usedbook.member.entity;
 
 import lombok.Data;
-import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

@@ -1,7 +1,7 @@
-package thwjd.usedbook.repository;
+package thwjd.usedbook.member.repository;
 
 import org.springframework.stereotype.Repository;
-import thwjd.usedbook.entity.Member;
+import thwjd.usedbook.member.entity.Member;
 
 import java.util.*;
 

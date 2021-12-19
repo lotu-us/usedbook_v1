@@ -39,13 +39,23 @@
 }
 
 .custom-loginPosition{
-    height:33px;
+    display:flex;
+    flex-direction:row;
 }
+.custom-loginPosition .btn{
+    height:33px;
+    margin-left:0.5rem;
+}
+
+/*
+.dropdown-toggle::after{
+
+} */
 
 @media (max-width:769px){
     .custom-loginPosition{
         position:absolute;
-        top:0.5rem;
-        right:70px;
+        top:0.55rem;
+        right:4rem;
     }
 }

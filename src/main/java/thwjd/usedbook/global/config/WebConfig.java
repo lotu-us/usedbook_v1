@@ -1,11 +1,11 @@
-package thwjd.usedbook.config;
+package thwjd.usedbook.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import thwjd.usedbook.annotation.LoginMemberArgumentResolver;
-import thwjd.usedbook.interceptor.LoginCheckInterceptor;
+import thwjd.usedbook.member.annotation.LoginMemberArgumentResolver;
+import thwjd.usedbook.member.interceptor.LoginCheckInterceptor;
 
 import java.util.List;
 

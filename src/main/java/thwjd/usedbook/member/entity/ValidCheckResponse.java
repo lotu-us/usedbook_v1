@@ -1,4 +1,4 @@
-package thwjd.usedbook.entity;
+package thwjd.usedbook.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

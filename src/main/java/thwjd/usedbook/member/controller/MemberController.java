@@ -1,4 +1,4 @@
-package thwjd.usedbook.controller;
+package thwjd.usedbook.member.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,17 +7,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import thwjd.usedbook.annotation.Login;
-import thwjd.usedbook.entity.Member;
-import thwjd.usedbook.entity.SessionConstants;
-import thwjd.usedbook.repository.MemberRepository;
-import thwjd.usedbook.service.MemberService;
+import thwjd.usedbook.member.entity.Member;
+import thwjd.usedbook.member.entity.SessionConstants;
+import thwjd.usedbook.member.repository.MemberRepository;
+import thwjd.usedbook.member.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -34,14 +32,13 @@ public class MemberController {
 
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute Member member, HttpServletRequest request, Model model){
+    public String loginForm(@ModelAttribute Member member){
         //타임리프에서 이상하게 자꾸 오류가 생기면 member를 전달해주었는지를 확인하자
         init();
         return "member/login";
     }
     @PostMapping("/login")
-    public String loginOk(@Validated @ModelAttribute Member member, BindingResult bindingResult, HttpServletRequest request){
-
+    public String loginOk(@Validated @ModelAttribute Member member, BindingResult bindingResult, HttpServletRequest request, @RequestParam(defaultValue = "/") String redirectURL){
         BindingResult newBindingResult = memberService.loginValidCheck(member, bindingResult);
 
         if(newBindingResult!=null && newBindingResult.hasErrors()){
@@ -53,7 +50,7 @@ public class MemberController {
             Member loginMember = memberRepository.findByEmail(member.getEmail()).orElse(null);
             session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMember);   // 세션에 로그인 회원 정보 보관
 
-            return "redirect:/";
+            return "redirect:"+redirectURL;
         }
     }
     @GetMapping("/logout")
