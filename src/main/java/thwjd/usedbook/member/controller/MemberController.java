@@ -111,6 +111,7 @@ public class MemberController {
 
 
 
+
     @GetMapping("/memberDetail")
     public String memberDetail(@Login Member loginMember, Model model){
         // 세션에 저장된 회원가져옴

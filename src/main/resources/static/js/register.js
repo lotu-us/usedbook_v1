@@ -1,19 +1,14 @@
-
-
-
-
-$("#registerForm input").on("change paste input", function(){
-  dataCheck();
+$(window).on("load", function(){  //회원가입 저장버튼 눌렀을 경우 기존입력값에 대한 메시지 출력
+  if($("#email").val().length != 0){    dataCheck("email");  }
+    if($("#name").val().length != 0){    dataCheck("name");  }
 });
 
-$(window).on("load", function(){  //회원가입 저장버튼 눌렀을 경우 기존입력값에 대한 메시지 출력
-  var email = $("#email").val();
-  var name = $("#name").val();
-  // console.log(email != null); //true
-  // console.log(!email);        //true
-  // console.log(email.length);  //0
-  if(email.length != 0){    dataCheck("email");  }
-  if(name.length != 0){    dataCheck("name");  }
+
+$("#email, #name, #password").on("change paste input", function(){
+
+  if($("#email").val().length != 0){    dataCheck("email");  }
+  if($("#name").val().length != 0){    dataCheck("name");  }
+  dataCheck();
 });
 
 

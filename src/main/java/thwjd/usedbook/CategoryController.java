@@ -1,4 +1,4 @@
-package thwjd.usedbook.member.controller;
+package thwjd.usedbook;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
