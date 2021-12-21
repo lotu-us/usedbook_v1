@@ -12,8 +12,8 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private static final String[] whitelist = {"/css/*", "/js/*", "/img/*",
-            "/", "/login", "/logout", "/register", "/register/check", "registerOk", "/findPassword"
+    private static final String[] whitelist = {"/css/**", "/js/**", "/img/**",
+            "/", "/login", "/logout", "/register", "/register/check", "registerOk", "/findPassword", "/newPost"
     };
     //whitelist 같은 경우 로그인하지 않아도 접근할 수 있는 자원들 목록
 
