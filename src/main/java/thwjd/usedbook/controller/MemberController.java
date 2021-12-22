@@ -12,6 +12,7 @@ import thwjd.usedbook.domain.Member;
 import thwjd.usedbook.domain.SessionConstants;
 import thwjd.usedbook.mapper.MybatisMapper;
 import thwjd.usedbook.repository.MemberRepository;
+import thwjd.usedbook.repository.MemberRepositoryMapper;
 import thwjd.usedbook.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,25 +25,12 @@ public class MemberController {
 
     @Autowired private MemberService memberService;
     @Autowired private MemberRepository memberRepository;
+    @Autowired private MemberRepositoryMapper memberRepositoryMapper;
 
-    @Autowired private MybatisMapper mybatisMapper;
-
-    @GetMapping("/mybatis")
-    @ResponseBody
-    public List<Member> memberList(){
-        return mybatisMapper.getList2();
-    }
-
-
-
-    public void init(){
-        memberRepository.save(new Member("11@11", "11", "11"));
-    }
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute Member member){
         //타임리프에서 이상하게 자꾸 오류가 생기면 member를 전달해주었는지를 확인하자
-        init();
         return "member/login";
     }
     @PostMapping("/login")
@@ -96,15 +84,19 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String registerOk(@Validated @ModelAttribute Member member, BindingResult bindingResult){
+    public String registerSave(@Validated @ModelAttribute Member member, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             //view에서 타임리프로 th:value="${member.email}" 하면 기존 입력값 출력됨
             return "member/register";
         }else {
-            memberRepository.save(member);
-            //log.info("All={}", memberRepository.findAll());
-            return "redirect:/member/registerOk";
+            memberRepositoryMapper.save(member);
+            //log.info("saved={}", member.getId());
+            return "redirect:/registerOk";
         }
+    }
+    @GetMapping("/registerOk")
+    public String registerOk(){
+        return "member/registerOk";
     }
 
     //ajax

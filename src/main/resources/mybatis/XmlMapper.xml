@@ -2,10 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="thwjd.usedbook.mapper.MybatisMapper">
+<mapper namespace="thwjd.usedbook.repository.MemberRepositoryMapper">
     <select id="getList2" resultType="Member">
         select * from member
     </select>
-</mapper>
 
-<!---->
+    <insert id="save2" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
+        insert into member values(#{id}, #{email}, #{name}, #{password})
+        <!-- Member의 id 필드 안으로 값이 저절로 들어간다.-->
+        <!-- java단에서 Member객체의 id값을 보면 값이 들어있을 것이다-->
+    </insert>
+</mapper>

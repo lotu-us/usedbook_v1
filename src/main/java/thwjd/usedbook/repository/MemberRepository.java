@@ -1,5 +1,6 @@
 package thwjd.usedbook.repository;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import thwjd.usedbook.domain.Member;
 
