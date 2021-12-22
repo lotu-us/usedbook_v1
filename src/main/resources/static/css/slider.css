@@ -50,7 +50,6 @@
 
 
 .previewslider .remove-position-parent{ position:relative; }
-.previewslider .remove-position-parent a { position:absolute; right:0px; display:block; }
 .previewslider .remove-position-parent i {
     font-size:25px;
     padding:3px 7px;
@@ -61,4 +60,5 @@
     border-bottom-left-radius:10px;
 }
 
-.previewslider .swiper-slide img {  object-fit:cover; height:100%; }
+.previewslider .swiper-slide img {  object-fit:cover; height:100%; cursor:pointer; }
+.previewslider .remove-slide { cursor:pointer; }

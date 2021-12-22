@@ -44,22 +44,19 @@
             500: {  slidesPerView: 4,  spaceBetween: 10, slidesPerGroup: 4, },
 
         },
-
     }
     ));
  });
 
 
 
-$(".previewslider .add-slide").on("click", function(){
-    var thisID = $(this).attr('id').replace('add-slide-', '');
+$(".previewslider .add-slideimg").on("click", function(){
+    var thisID = $(this).attr('id').replace('add-slideimg-', '');
 
     previewSwipers.get("previewslider_"+thisID)
     .prependSlide(`
         <div class="swiper-slide card shadow-sm">
-            <a href="#" class="small-slide">
-                <img class="swiper-lazy" src="https://plchldr.co/i/150x150">
-            </a>
+            <img class="small-slideimg" src="https://plchldr.co/i/150x150">
         </div>
     `);
 
@@ -67,7 +64,7 @@ $(".previewslider .add-slide").on("click", function(){
 
 
 $(".previewslider .remove-slide").on("click", function(){
-    var slideClicked = $(".previewslider .slide-click").parents()[1];
+    var slideClicked = $(".previewslider .slide-click").parents()[0];
     slideClicked.remove();
 
 //    var thisID = $(this).attr('id').replace('remove-slide-', '');
@@ -86,7 +83,7 @@ $(window).on("load resize", function(){
     }, 50);
 });
 
-$(".previewslider .small-slide img").on("click", function(){
+$(".previewslider .small-slideimg").on("click", function(){
     var imgsrc = $(this).attr("src");
     $(".previewslider .previewimg").attr("src", imgsrc);
 
