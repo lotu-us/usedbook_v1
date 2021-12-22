@@ -1,10 +1,8 @@
-package thwjd.usedbook.member.interceptor;
+package thwjd.usedbook.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import thwjd.usedbook.member.entity.SessionConstants;
+import thwjd.usedbook.domain.SessionConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

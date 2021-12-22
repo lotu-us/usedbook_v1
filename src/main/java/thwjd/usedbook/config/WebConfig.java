@@ -1,11 +1,11 @@
-package thwjd.usedbook.global.config;
+package thwjd.usedbook.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import thwjd.usedbook.member.annotation.LoginMemberArgumentResolver;
-import thwjd.usedbook.member.interceptor.LoginCheckInterceptor;
+import thwjd.usedbook.annotation.LoginMemberArgumentResolver;
+import thwjd.usedbook.interceptor.LoginCheckInterceptor;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
 
     private static final String[] whitelist = {"/css/**", "/js/**", "/img/**",
-            "/", "/login", "/logout", "/register", "/register/check", "registerOk", "/findPassword", "/newPost"
+            "/", "/login", "/logout", "/register", "/register/check", "registerOk", "/findPassword", "/newPost", "/mybatis"
     };
     //whitelist 같은 경우 로그인하지 않아도 접근할 수 있는 자원들 목록
 

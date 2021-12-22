@@ -1,6 +1,8 @@
-package thwjd.usedbook.member.entity;
+package thwjd.usedbook.domain;
 
 import lombok.Data;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.type.Alias;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

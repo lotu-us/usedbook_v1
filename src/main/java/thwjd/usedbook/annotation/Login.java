@@ -1,4 +1,4 @@
-package thwjd.usedbook.member.annotation;
+package thwjd.usedbook.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

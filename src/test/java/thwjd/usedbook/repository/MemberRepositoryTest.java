@@ -1,9 +1,9 @@
-package thwjd.usedbook.member.repository;
+package thwjd.usedbook.repository;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import thwjd.usedbook.member.entity.Member;
+import thwjd.usedbook.domain.Member;
 
 import java.util.List;
 import java.util.Optional;

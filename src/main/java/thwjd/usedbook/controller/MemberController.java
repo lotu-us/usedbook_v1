@@ -1,4 +1,4 @@
-package thwjd.usedbook.member.controller;
+package thwjd.usedbook.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,16 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import thwjd.usedbook.member.annotation.Login;
-import thwjd.usedbook.member.entity.Member;
-import thwjd.usedbook.member.entity.SessionConstants;
-import thwjd.usedbook.member.repository.MemberRepository;
-import thwjd.usedbook.member.service.MemberService;
+import thwjd.usedbook.annotation.Login;
+import thwjd.usedbook.domain.Member;
+import thwjd.usedbook.domain.SessionConstants;
+import thwjd.usedbook.mapper.MybatisMapper;
+import thwjd.usedbook.repository.MemberRepository;
+import thwjd.usedbook.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -25,12 +25,19 @@ public class MemberController {
     @Autowired private MemberService memberService;
     @Autowired private MemberRepository memberRepository;
 
+    @Autowired private MybatisMapper mybatisMapper;
+
+    @GetMapping("/mybatis")
+    @ResponseBody
+    public List<Member> memberList(){
+        return mybatisMapper.getList2();
+    }
+
+
 
     public void init(){
         memberRepository.save(new Member("11@11", "11", "11"));
     }
-
-
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute Member member){

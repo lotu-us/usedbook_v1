@@ -1,13 +1,13 @@
-package thwjd.usedbook.member.service;
+package thwjd.usedbook.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import thwjd.usedbook.member.entity.Member;
-import thwjd.usedbook.member.entity.ValidCheckResponse;
-import thwjd.usedbook.member.repository.MemberRepository;
+import thwjd.usedbook.domain.Member;
+import thwjd.usedbook.domain.ValidCheckResponse;
+import thwjd.usedbook.repository.MemberRepository;
 
 import java.util.ArrayList;
 import java.util.List;

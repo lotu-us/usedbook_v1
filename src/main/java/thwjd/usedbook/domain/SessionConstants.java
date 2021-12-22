@@ -1,4 +1,4 @@
-package thwjd.usedbook.member.entity;
+package thwjd.usedbook.domain;
 
 public interface SessionConstants {
     String LOGIN_MEMBER = "loginMember";

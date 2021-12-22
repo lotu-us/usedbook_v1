@@ -1,12 +1,12 @@
-package thwjd.usedbook;
+package thwjd.usedbook.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import thwjd.usedbook.member.annotation.Login;
-import thwjd.usedbook.member.entity.Member;
+import thwjd.usedbook.annotation.Login;
+import thwjd.usedbook.domain.Member;
 
 @Slf4j
 @Controller
