@@ -12,12 +12,12 @@ import thwjd.usedbook.domain.Member;
 @Controller
 public class CategoryController {
 
-    @GetMapping("/{category}")
-    public String category(@PathVariable String category, @Login Member loginMember, Model model){
-        log.info("{} enter", category);
+    @GetMapping("/category/{number}")
+    public String category(@PathVariable String number, @Login Member loginMember, Model model){
+        log.info("{} enter", number);
 
         // 세션이 유지되면 로그인 홈으로 이동
         model.addAttribute("loginMember", loginMember);
-        return "category/"+category;
+        return "category/category"+number;
     }
 }
