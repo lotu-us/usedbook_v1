@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import thwjd.usedbook.annotation.Login;
 import thwjd.usedbook.domain.Member;
 import thwjd.usedbook.domain.SessionConstants;
-import thwjd.usedbook.mapper.MybatisMapper;
 import thwjd.usedbook.repository.MemberRepository;
 import thwjd.usedbook.repository.MemberRepositoryMapper;
 import thwjd.usedbook.service.MemberService;
@@ -24,8 +23,7 @@ import java.util.List;
 public class MemberController {
 
     @Autowired private MemberService memberService;
-    @Autowired private MemberRepository memberRepository;
-    @Autowired private MemberRepositoryMapper memberRepositoryMapper;
+    @Autowired private MemberRepositoryMapper memberRepository;
 
 
     @GetMapping("/login")
@@ -89,7 +87,7 @@ public class MemberController {
             //view에서 타임리프로 th:value="${member.email}" 하면 기존 입력값 출력됨
             return "member/register";
         }else {
-            memberRepositoryMapper.save(member);
+            memberRepository.save(member);
             //log.info("saved={}", member.getId());
             return "redirect:/registerOk";
         }

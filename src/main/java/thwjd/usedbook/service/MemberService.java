@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import thwjd.usedbook.domain.Member;
 import thwjd.usedbook.domain.ValidCheckResponse;
 import thwjd.usedbook.repository.MemberRepository;
+import thwjd.usedbook.repository.MemberRepositoryMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class MemberService {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberRepositoryMapper memberRepository;
 
     public BindingResult loginValidCheck(Member member, BindingResult bindingResult){
 
