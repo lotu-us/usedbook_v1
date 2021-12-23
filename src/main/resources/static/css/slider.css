@@ -61,4 +61,5 @@
 }
 
 .previewslider .swiper-slide img {  object-fit:cover; height:100%; cursor:pointer; }
-.previewslider .remove-slide { cursor:pointer; }
+.previewslider .swiper-slide:last-of-type { border:0px; box-shadow:none; }  /* add-slideimg의 부모 */
+.previewslider .remove-slideimg { cursor:pointer; }

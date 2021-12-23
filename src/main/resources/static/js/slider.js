@@ -50,20 +50,43 @@
 
 
 
+
+$(window).on("load resize", function(){
+    heightResize();
+});
+
+function heightResize(){
+    setTimeout(function(){
+        var slidewidth = $(".previewslider .swiper-slide").css("width");
+        $(".previewslider .swiper-slide").css("height", slidewidth);
+
+        var previewwidth = $(".previewslider .previewimg").css("width");
+        $(".previewslider .previewimg").css("height", previewwidth);
+    }, 50);
+}
+
+
+
+
+
+var testcount = 5;
 $(".previewslider .add-slideimg").on("click", function(){
     var thisID = $(this).attr('id').replace('add-slideimg-', '');
 
     previewSwipers.get("previewslider_"+thisID)
     .prependSlide(`
         <div class="swiper-slide card shadow-sm">
-            <img class="small-slideimg" src="https://plchldr.co/i/150x150">
+            <img class="small-slideimg" src="/img/testimg/${testcount}.jpg">
         </div>
     `);
 
+    previewImgShow($(".previewslider .swiper-slide img").first());
+    heightResize();
+    testcount++;
 });
 
 
-$(".previewslider .remove-slide").on("click", function(){
+$(".previewslider .remove-slideimg").on("click", function(){
     var slideClicked = $(".previewslider .slide-click").parents()[0];
     slideClicked.remove();
 
@@ -73,19 +96,26 @@ $(".previewslider .remove-slide").on("click", function(){
 });
 
 
-$(window).on("load resize", function(){
-    setTimeout(function(){
-        var slidewidth = $(".previewslider .swiper-slide").css("width");
-        $(".previewslider .swiper-slide").css("height", slidewidth);
 
-        var previewwidth = $(".previewslider .previewimg").css("width");
-        $(".previewslider .previewimg").css("height", previewwidth);
-    }, 50);
+
+
+//$(".previewslider .small-slideimg").on("click", function(){
+//    console.log($(this).attr("class"));
+//    previewImgShow($(this));
+//});
+//동적으로 추가된 요소의 이벤트를 감지하려면 document로 작성해야함
+
+$(document).on("click", ".previewslider .small-slideimg" , function() {
+     previewImgShow($(this));
 });
 
-$(".previewslider .small-slideimg").on("click", function(){
-    var imgsrc = $(this).attr("src");
+function previewImgShow(thisElement){
+    var imgsrc = thisElement.attr("src");
     $(".previewslider .previewimg").attr("src", imgsrc);
 
-    $(this).addClass("slide-click");
-});
+    $(".previewslider .swiper-slide img").each(function(index, imgElement){
+        $(imgElement).removeClass("slide-click");
+    });
+
+    thisElement.addClass("slide-click");
+}
