@@ -12,5 +12,5 @@ spring:
     password: 1234
 
 mybatis:
-  type-aliases-package: thwjd.usedbook.domain
+  type-aliases-package: thwjd.usedbook.entity
   mapper-locations: mybatis/**.xml

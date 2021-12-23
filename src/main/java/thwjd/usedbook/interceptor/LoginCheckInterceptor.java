@@ -2,7 +2,7 @@ package thwjd.usedbook.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
-import thwjd.usedbook.domain.SessionConstants;
+import thwjd.usedbook.entity.SessionConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import thwjd.usedbook.annotation.Login;
-import thwjd.usedbook.domain.Member;
+import thwjd.usedbook.entity.Member;
 
 @Slf4j
 @Controller

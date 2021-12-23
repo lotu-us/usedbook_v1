@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import thwjd.usedbook.domain.Member;
-import thwjd.usedbook.domain.ValidCheckResponse;
-import thwjd.usedbook.repository.MemberRepository;
+import thwjd.usedbook.entity.Member;
+import thwjd.usedbook.entity.ValidCheckResponse;
 import thwjd.usedbook.repository.MemberRepositoryMapper;
 
 import java.util.ArrayList;

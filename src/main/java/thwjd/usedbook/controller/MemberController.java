@@ -8,9 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import thwjd.usedbook.annotation.Login;
-import thwjd.usedbook.domain.Member;
-import thwjd.usedbook.domain.SessionConstants;
-import thwjd.usedbook.repository.MemberRepository;
+import thwjd.usedbook.entity.Member;
+import thwjd.usedbook.entity.SessionConstants;
 import thwjd.usedbook.repository.MemberRepositoryMapper;
 import thwjd.usedbook.service.MemberService;
 
