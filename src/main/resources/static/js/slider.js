@@ -69,21 +69,31 @@ function heightResize(){
 
 
 
-var testcount = 5;
+
 $(".previewslider .add-slideimg").on("click", function(){
-    var thisID = $(this).attr('id').replace('add-slideimg-', '');
+    console.log("add-slideimg click");
+
+    $("#fileUploadBtn").click();
+});
+
+function addSlideDesign(blobsrc){
+    console.log("addSlideDesign")
+    console.log(blobsrc);
+    //blob:http://localhost:8080/20e84207-1992-41ab-9b88-7949bb94f05f
+
+    var thisID = $(".previewslider .add-slideimg").attr('id').replace('add-slideimg-', '');
 
     previewSwipers.get("previewslider_"+thisID)
     .prependSlide(`
         <div class="swiper-slide card shadow-sm">
-            <img class="small-slideimg" src="/img/testimg/${testcount}.jpg">
+            <img class="small-slideimg" src="${blobsrc}">
         </div>
     `);
+    //<img class="small-slideimg" src="/img/testimg/${testcount}.jpg">
 
     previewImgShow($(".previewslider .swiper-slide img").first());
     heightResize();
-    testcount++;
-});
+}
 
 
 $(".previewslider .remove-slideimg").on("click", function(){
@@ -119,3 +129,31 @@ function previewImgShow(thisElement){
 
     thisElement.addClass("slide-click");
 }
+
+
+
+
+
+
+
+
+function ajaxImageUpload(){
+//    var bookPost = {};
+//    bookPost.imgFilePath = "";
+//    bookPost.imgFileName = "";
+//
+//    $.ajax({
+//        type:"POST",
+//        url:"/newPost/imageUpload",
+//        contentType: 'application/json',
+//        data: JSON.stringify(bookPost),
+//        success: function(data) {
+//
+//        },
+//        error: function(){
+//
+//        }
+//    });
+}
+
+

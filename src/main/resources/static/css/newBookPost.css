@@ -1,0 +1,37 @@
+.d-flex{ flex-direction:row; }
+.row{ margin-right:0px; margin-left:0px;}
+.col{ width:50%; }
+.previewslider .swiper { margin:0px; }
+a{ text-decoration:none; }
+.imgcol{  padding-right:3rem!important; }
+
+#editorForm .form-label, #editorForm .col-form-label { font-size:1.1rem; padding-right:0px; padding-left:0px; }
+#editorForm .col, #editorForm .col-3 { padding-right:0px; padding-left:0px; }
+
+
+
+@media screen and (min-width:992px){ .container{ max-width:750px; } #bookDescription{ height:270px; } }
+@media screen and (max-width:992px){ .container{ max-width:670px; } #bookDescription{ height:220px; } }
+@media screen and (max-width:720px){ .container{ max-width:550px; } #bookDescription{ height:145px; } }
+@media screen and (max-width:576px){
+    .container{ min-width:330px; max-width:400px; }
+    .d-flex{ flex-direction:column; }
+    .col{ width:100%; }
+    .inputcol{ margin-top:20px; }
+     #bookDescription{ height:150px; }
+    .imgcol{ padding-left:0.5rem!important; padding-right:0.5rem!important; }
+}
+
+
+
+
+#editorForm .inputcol .col { position:relative; }
+#editorForm .inputcol .col .invalid-tooltip {
+    position:absolute;
+    animation: fadeout 3s ease-out;
+    animation-fill-mode: forwards;
+}
+@KeyFrames fadeout {
+    from{ opacity:1; }
+    to { opacity:0; }
+}
