@@ -15,7 +15,7 @@
         <div class="d-flex">
             <div class="col imgcol">
                 <div th:replace="fragments/slider :: previewslider('swiperA')"></div>
-                <input type="file" value="업로드" id="fileUploadBtn" accept="image/*" style="display:none;">
+                <input type="file" value="업로드" id="fileUploadBtn" accept="image/*" multiple>
             </div>
 
 
@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="text-end mb-5">
-            <button class="mt-2 btn btn-lg rounded-4 btn-primary" type="button" onClick="$('#editorForm').submit();">저장</button>
+            <button class="mt-2 btn btn-lg rounded-4 btn-primary" type="button" id="editorFormSubmit">저장</button>
         </div>
     </form>
 </div>

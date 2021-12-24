@@ -71,14 +71,14 @@ function heightResize(){
 
 
 $(".previewslider .add-slideimg").on("click", function(){
-    console.log("add-slideimg click");
+    //console.log("add-slideimg click");
 
     $("#fileUploadBtn").click();
 });
 
 function addSlideDesign(blobsrc){
-    console.log("addSlideDesign")
-    console.log(blobsrc);
+    //console.log("addSlideDesign")
+    //console.log(blobsrc);
     //blob:http://localhost:8080/20e84207-1992-41ab-9b88-7949bb94f05f
 
     var thisID = $(".previewslider .add-slideimg").attr('id').replace('add-slideimg-', '');
@@ -97,9 +97,11 @@ function addSlideDesign(blobsrc){
 
 
 $(".previewslider .remove-slideimg").on("click", function(){
-    var slideClicked = $(".previewslider .slide-click").parents()[0];
-    slideClicked.remove();
+    var slideClicked = $(".previewslider .slide-click");
 
+    fileDelete($(slideClicked).attr("src"));
+
+    slideClicked.parents()[0].remove();
 //    var thisID = $(this).attr('id').replace('remove-slide-', '');
 //    previewSwipers.get("previewslider_"+thisID)
 //    .removeSlide($('#'+thisID+' .swiper-slide').length - 1);

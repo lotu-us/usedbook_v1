@@ -27,6 +27,9 @@ dependencies {
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 
+	implementation 'commons-io:commons-io:2.11.0'
+	implementation 'commons-fileupload:commons-fileupload:1.4'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor 'org.projectlombok:lombok'

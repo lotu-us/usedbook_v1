@@ -23,10 +23,10 @@ public class BookPost {
     private String bookDescription;
 
     //@NotBlank
-    private String imgFilePath;
+    private StringBuilder imgFilePath;
 
     //@NotBlank
-    private String imgFileName;
+    private StringBuilder imgFileName;
 
     public BookPost(){
 
