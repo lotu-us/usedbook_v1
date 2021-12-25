@@ -43,10 +43,8 @@ $("#fileUploadBtn").on("change", function(event){
         //이렇게 생성된 주소는 브라우저의 메모리에 올라가있다.
 
         uploadFileMap.set(blobsrc, file);
+        addSlideDesign(blobsrc);
     });
-
-
-    addSlideDesign(blobsrc);
 
     blobsrc.onload = function(){
         URL.rejectObjectUrl(blobsrc);
@@ -105,8 +103,8 @@ $("#editorFormSubmit").click(function(event){
         contentType: false,
         processData: false,
         success : function(result){
-            console.log(result);
-            $("#editorForm").submit();
+            //console.log(result);
+            //$("#editorForm").submit();
         },
         error: function(){
         }

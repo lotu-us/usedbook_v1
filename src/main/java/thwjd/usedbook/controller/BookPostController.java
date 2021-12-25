@@ -30,7 +30,6 @@ public class BookPostController {
     @PostMapping("/newBookPost")
     public String newPostSave(@Validated @ModelAttribute BookPost bookPost, BindingResult bindingResult) throws IOException {
 
-
         log.info("bookPost={}", bookPost);
         if(bindingResult.hasErrors() || bookPost.getBookCategory() == null){
             bindingResult.rejectValue("bookCategory", "bookCategoryNullFail", "값을 선택해주세요");
@@ -47,18 +46,17 @@ public class BookPostController {
 
         String projectPath = System.getProperty("user.dir");
         String userUploadImgPath = projectPath + "\\src\\main\\resources\\userUploadImg";
-
         UUID uuid = UUID.randomUUID();
-
-//        String filename = uuid + "_" + fileList.getOriginalFilename();
-//
-//        File saveFile = new File(userUploadImgPath, filename);
-//        fileList.transferTo(saveFile);
 
         String result="";
         for (MultipartFile multipartFile : fileList) {
-            result = result + multipartFile.getOriginalFilename() + ", ";
+            String filename = uuid + "_" + multipartFile.getOriginalFilename();
+            File saveFile = new File(userUploadImgPath, filename);
+            multipartFile.transferTo(saveFile);
+
+            result = result + multipartFile.getOriginalFilename()+" / ";
         }
+        //log.info("result={}", result);
         return result;
     }
 }

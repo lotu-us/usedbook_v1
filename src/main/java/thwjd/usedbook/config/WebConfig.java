@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
             "/", "/login", "/logout",
             "/register", "/register/check", "/registerOk",
             "/findPassword",
-            "/newBookPost",
+            "/newBookPost", "/newBookPost/fileupload",
             "/mybatis",
             "/error"
     };
