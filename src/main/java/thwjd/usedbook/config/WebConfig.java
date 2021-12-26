@@ -13,10 +13,10 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
 
     private static final String[] whitelist = {"/css/**", "/js/**", "/img/**",
-            "/", "/login", "/logout",
-            "/register", "/register/check", "/registerOk",
-            "/findPassword",
-            "/newBookPost", "/newBookPost/*",
+            "/", "/login", "/logout", "/findPassword", "/register", "/registerOk", "/register/check",
+            "/member/*",
+            "/bookPost/*",
+            "/category/*",
             "/mybatis",
             "/error"
     };

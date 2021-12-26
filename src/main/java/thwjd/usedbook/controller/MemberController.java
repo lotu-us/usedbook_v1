@@ -108,14 +108,14 @@ public class MemberController {
 
 
 
-    @GetMapping("/memberDetail")
+    @GetMapping("/member/detail")
     public String memberDetail(){
-        return "member/memberDetail";
+        return "member/detail";
     }
-    @PostMapping("/memberDetail")
+    @PostMapping("/member/detail")
     public String memberDetailUpdate(@ModelAttribute Member member, BindingResult bindingResult){
 
-        return "redirect:/member/memberDetail";
+        return "redirect:/member/detail";
     }
 
 }

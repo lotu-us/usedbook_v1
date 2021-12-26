@@ -103,7 +103,7 @@ $("#editorFormSubmit").click(function(event){
 //    }
 
     $.ajax({
-        url: "/newBookPost",
+        url: "/bookPost/write",
         type: "POST",
         data: formData,    //formData는 반드시 ajax랑 사용@!!
         contentType: false,
@@ -127,8 +127,8 @@ $("#editorFormSubmit").click(function(event){
             }
 
             if(result.status == "saveOk"){
-                alert(result.response);
-                //window.location.replace(result.response);
+                //alert(result.response);
+                window.location.replace(result.response);
             }
 
         },

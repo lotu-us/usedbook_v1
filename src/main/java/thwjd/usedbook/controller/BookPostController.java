@@ -19,20 +19,21 @@ import java.util.*;
 
 @Slf4j
 @Controller
+@RequestMapping("/bookPost")
 public class BookPostController {
 
     @Autowired BookPostService bookPostService;
     @Autowired BookPostRepositoryMapper bookPostMapper;
     @Autowired BookPostFileRepositoryMapper bookPostFileMapper;
 
-    @GetMapping("/newBookPost")
-    public String newBookPostForm(@ModelAttribute BookPost bookPost){
-        return "bookpost/newBookPost";
+    @GetMapping("/write")
+    public String writeForm(@ModelAttribute BookPost bookPost){
+        return "bookPost/write";
     }
 
-    @PostMapping("/newBookPost")
+    @PostMapping("/write")
     @ResponseBody
-    public Map newBookPostSave(@Validated @ModelAttribute BookPost bookPost, BindingResult bindingResult,
+    public Map writeSave(@Validated @ModelAttribute BookPost bookPost, BindingResult bindingResult,
                                HttpServletRequest request) throws IOException {
         Map<String, Object> response = new HashMap<>();
 
@@ -50,7 +51,7 @@ public class BookPostController {
         if(validList.size() == 0){
             String currentUrl = request.getRequestURL().toString();
             String urlCategory = bookPost.getBookCategory().toString().toLowerCase();
-            String redirectUrl = currentUrl.replace("/newBookPost", "/"+urlCategory);
+            String redirectUrl = currentUrl.replace("/bookPost/write", "/category/"+urlCategory);
             response.put("status", "saveOk");
             response.put("response", redirectUrl);
 
@@ -60,8 +61,6 @@ public class BookPostController {
 
             bookPostMapper.save(bookPost);  //id저장됨
             bookPostService.fileSave(bookPost);
-
-            //return "/bookpost/categoryName";
         }
 
         return response;
