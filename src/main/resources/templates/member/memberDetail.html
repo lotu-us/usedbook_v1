@@ -22,12 +22,12 @@
 
     <div class="row">
       <div class="col text-center">이메일 </div>
-      <div class="col col-9" th:text="${loginMember.email}"></div>
+      <div class="col col-9" th:text="${session.loginMember.email}"></div>
     </div>
 
     <div class="row">
       <div class="col text-center">이름 </div>
-      <div class="col col-9" th:text="${loginMember.name}"></div>
+      <div class="col col-9" th:text="${session.loginMember.name}"></div>
     </div>
 
     <button class="w-100 mb-2 mt-4 btn btn-lg rounded-4 btn-primary" type="button" onClick="$('#detailForm').submit();">회원정보 수정</button>

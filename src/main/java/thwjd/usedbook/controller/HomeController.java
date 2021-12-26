@@ -11,15 +11,7 @@ import thwjd.usedbook.entity.Member;
 @Controller
 public class HomeController {
     @GetMapping("/")
-    public String index(@Login Member loginMember, Model model){
-
-        //세션에 회원데이터가 없으면 그냥 홈으로 이동
-        if (loginMember == null) {
-            return "index";
-        }
-
-        // 세션이 있으면 model에 담아 홈으로 이동
-        model.addAttribute("loginMember", loginMember);
+    public String index(){
         return "index";
     }
     /*
