@@ -1,0 +1,88 @@
+package thwjd.usedbook.service;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
+import thwjd.usedbook.entity.BookPost;
+import thwjd.usedbook.entity.BookPostFile;
+import thwjd.usedbook.entity.ValidCheckResponse;
+import thwjd.usedbook.repository.BookPostFileRepositoryMapper;
+
+import javax.servlet.ServletContext;
+import java.awt.print.Book;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Slf4j
+@Service
+public class BookPostService {
+
+    @Autowired BookPostFileRepositoryMapper bookPostFileMapper;
+
+    public List newBookPostValidCheck(BookPost bookPost, BindingResult bindingResult){
+        List<ValidCheckResponse> response = new ArrayList<>();
+
+        String[] fields = {"bookName", "bookCategory", "bookPrice", "bookDescription"};
+        //defaultErrorAdd
+        for (String field : fields) {
+            if(bindingResult.hasFieldErrors(field)){
+                StringBuilder errorMessage = new StringBuilder("");
+                List<FieldError> fieldErrors = bindingResult.getFieldErrors(field);
+                for (FieldError fieldError : fieldErrors) {
+                    errorMessage.append(fieldError.getDefaultMessage()+"<br>");
+                }
+                response.add(new ValidCheckResponse(false, field, errorMessage.toString()));
+            }
+        }
+
+        //custom
+        if(bookPost.getBookCategory() == null){
+            response.add(new ValidCheckResponse(false, "bookCategory", "값을 선택해주세요"));
+        }
+
+//        for (String field : fields) {
+//            if(!bindingResult.hasFieldErrors(field)){
+//                response.add(new ValidCheckResponse(true, field, ""));
+//            }
+//        }
+        return response;
+    }
+
+
+    public void fileSave(BookPost bookPost) throws IOException {
+        //String uploadPath = Paths.get("D:", "projectEn", "usedbook", "src", "main", "resources", "userUploadImg").toString();
+        String uploadPath = Paths.get("D:", "projectEn", "usedbook", "userUploadImg").toString();
+
+        int order = 10;
+        for (MultipartFile multipartFile : bookPost.getFileList()) {
+            UUID uuid = UUID.randomUUID();
+            String filename = uuid + "_" + order + "_" + multipartFile.getOriginalFilename();
+            Path savePath = Paths.get(uploadPath + File.separator + filename).toAbsolutePath();
+
+            multipartFile.transferTo(savePath.toFile());
+            //MultipartFile.transferTo()는 요청 시점의 임시 파일을 로컬 파일 시스템에 영구적으로 복사하는 역할을 수행한다.
+            // 단 한번만 실행되며 두번째 실행부터는 성공을 보장할 수 없다.
+            //Embedded Tomcat을 컨테이너로 사용할 경우 DiskFileItem.write()가 실제 역할을 수행한다.
+            // I/O 사용을 최소화하기 위해 파일 이동을 시도하며, 이동이 불가능할 경우 파일 복사를 진행한다.
+
+            BookPostFile bookPostFile = new BookPostFile(
+                    bookPost.getId(),
+                    bookPost.getWriterEmail(),
+                    uploadPath,
+                    filename
+            );
+            bookPostFileMapper.save(bookPostFile);
+            order--;
+        }
+    }
+
+}

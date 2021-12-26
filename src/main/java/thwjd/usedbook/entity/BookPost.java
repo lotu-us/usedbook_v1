@@ -1,13 +1,25 @@
 package thwjd.usedbook.entity;
 
 import lombok.Data;
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
 import javax.validation.constraints.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class BookPost {
-    private String email;
+
+    private Long id;
+
+    //@NotBlank
+    private String writerEmail;
 
     @NotBlank
     private String bookName;
@@ -22,13 +34,6 @@ public class BookPost {
     @NotBlank
     private String bookDescription;
 
-    //@NotBlank
-    private StringBuilder imgFilePath;
+    private List<MultipartFile> fileList;
 
-    //@NotBlank
-    private StringBuilder imgFileName;
-
-    public BookPost(){
-
-    }
 }

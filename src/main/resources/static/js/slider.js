@@ -70,11 +70,7 @@ function heightResize(){
 
 
 
-$(".previewslider .add-slideimg").on("click", function(){
-    //console.log("add-slideimg click");
 
-    $("#fileUploadBtn").click();
-});
 
 function addSlideDesign(blobsrc){
     //console.log("addSlideDesign")

@@ -3,11 +3,8 @@ server:
     session:
       timeout: 60  # 기본값은 30m(30분) m을 붙이지 않으면 초단위로 설정됨. 최소 60초 이상일 것
       tracking-modes: cookie  #최초접속 시 url에 jsession안붙게
-    multipart:
-      enabled: true
-#    multipart:
-#      maxFileSize: 10MB     #파일의 최대 사이즈
-#      maxRequestSize: 20MB  #요청한 최대 사이즈
+
+
 
 spring:
   datasource:
@@ -15,6 +12,11 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: usedbookroot
     password: 1234
+  servlet:
+    multipart:
+      enabled: true
+      maxFileSize: 30MB     #파일의 최대 사이즈
+      maxRequestSize: 30MB  #요청한 최대 사이즈
 
 mybatis:
   type-aliases-package: thwjd.usedbook.entity

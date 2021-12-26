@@ -25,9 +25,8 @@
                         <label class="col-form-label">도서명</label>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" id="bookName" name="bookName"
-                               th:value="${bookPost.bookName}" th:field="${bookPost.bookName}" th:errorclass="is-invalid">
-                        <div class="invalid-tooltip" th:errors="${bookPost.bookName}">
+                        <input type="text" class="form-control" id="bookName" name="bookName" th:value="${bookPost.bookName}" >
+                        <div class="invalid-tooltip" id="bookNameHelp">
                             Please choose a unique and valid username.
                         </div>
                     </div>
@@ -37,14 +36,13 @@
                         <label class="col-form-label">카테고리</label>
                     </div>
                     <div class="col">
-                        <select class="form-select" aria-label="Default select example" id="bookCategory" name="bookCategory"
-                                th:field="${bookPost.bookCategory}" th:errorclass="is-invalid">
+                        <select class="form-select" aria-label="Default select example" id="bookCategory" name="bookCategory">
                             <option value="">카테고리</option>
                             <option th:each="category : ${T(thwjd.usedbook.entity.BookCategory).values()}"
                                     th:value="${category}" th:text="${category.name}">
                             </option>
                         </select>
-                        <div class="invalid-tooltip" th:errors="${bookPost.bookCategory}">
+                        <div class="invalid-tooltip" id="bookCategoryHelp">
                             Please choose a unique and valid username.
                         </div>
                     </div>
@@ -54,9 +52,9 @@
                         <label class="col-form-label">가격</label>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" id="bookPrice" name="bookPrice"
-                               th:value="${bookPost.bookPrice}" th:field="${bookPost.bookPrice}" th:errorclass="is-invalid">
-                        <div class="invalid-tooltip" th:errors="${bookPost.bookPrice}">
+                        <input type="number" class="form-control" id="bookPrice" name="bookPrice" placeholder="1000원 이상의 값을 적어주세요"
+                               th:value="${bookPost.bookPrice}" >
+                        <div class="invalid-tooltip" id="bookPriceHelp">
                             Please choose a unique and valid username.
                         </div>
                     </div>
@@ -65,9 +63,8 @@
                     <div class="col">
                         <label class="form-label">설명</label>
                         <textarea class="form-control" id="bookDescription" name="bookDescription" placeholder="상품의 설명이나 상태를 설명해주세요"
-                                  th:value="${bookPost.bookDescription}" th:field="${bookPost.bookDescription}" th:errorclass="is-invalid">
-                        </textarea>
-                        <div class="invalid-tooltip" th:errors="${bookPost.bookDescription}">
+                                  th:value="${bookPost.bookDescription}" ></textarea>
+                        <div class="invalid-tooltip" id="bookDescriptionHelp">
                             Please choose a unique and valid username.
                         </div>
                     </div>

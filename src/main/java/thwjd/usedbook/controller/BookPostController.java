@@ -1,62 +1,69 @@
 package thwjd.usedbook.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.web.multipart.MultipartFile;
-import thwjd.usedbook.entity.BookCategory;
+import thwjd.usedbook.annotation.Login;
 import thwjd.usedbook.entity.BookPost;
+import thwjd.usedbook.entity.Member;
+import thwjd.usedbook.repository.BookPostFileRepositoryMapper;
+import thwjd.usedbook.repository.BookPostRepositoryMapper;
+import thwjd.usedbook.service.BookPostService;
 
-import javax.validation.Valid;
-import java.awt.print.Book;
-import java.io.File;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Controller
 public class BookPostController {
 
+    @Autowired BookPostService bookPostService;
+    @Autowired BookPostRepositoryMapper bookPostMapper;
+    @Autowired BookPostFileRepositoryMapper bookPostFileMapper;
+
     @GetMapping("/newBookPost")
-    public String newPostForm(@ModelAttribute BookPost bookPost){
+    public String newBookPostForm(@ModelAttribute BookPost bookPost){
         return "bookpost/newBookPost";
     }
 
     @PostMapping("/newBookPost")
-    public String newPostSave(@Validated @ModelAttribute BookPost bookPost, BindingResult bindingResult) throws IOException {
-
-        log.info("bookPost={}", bookPost);
-        if(bindingResult.hasErrors() || bookPost.getBookCategory() == null){
-            bindingResult.rejectValue("bookCategory", "bookCategoryNullFail", "값을 선택해주세요");
-            return "bookpost/newBookPost";
-        }
-
-        //return "/bookpost/categoryName";
-        return "redirect:/";
-    }
-
-    @PostMapping("/newBookPost/fileupload")
     @ResponseBody
-    public String newPostSave(@RequestParam(value = "fileList", required = false) MultipartFile[] fileList) throws IOException {
+    public Map newBookPostSave(@Validated @ModelAttribute BookPost bookPost, BindingResult bindingResult,
+                               HttpServletRequest request) throws IOException {
+        Map<String, Object> response = new HashMap<>();
 
-        String projectPath = System.getProperty("user.dir");
-        String userUploadImgPath = projectPath + "\\src\\main\\resources\\userUploadImg";
-        UUID uuid = UUID.randomUUID();
-
-        String result="";
-        for (MultipartFile multipartFile : fileList) {
-            String filename = uuid + "_" + multipartFile.getOriginalFilename();
-            File saveFile = new File(userUploadImgPath, filename);
-            multipartFile.transferTo(saveFile);
-
-            result = result + multipartFile.getOriginalFilename()+" / ";
+        if(bookPost.getFileList().size() > 10){
+            response.put("status", "validPhoto");
+            response.put("response", "사진은 10개까지만 업로드 가능합니다.");
         }
-        //log.info("result={}", result);
-        return result;
+
+        List validList = bookPostService.newBookPostValidCheck(bookPost, bindingResult);
+        if(validList.size() > 0){
+            response.put("status", "valid");
+            response.put("response", validList);
+        }
+
+        if(validList.size() == 0){
+            String currentUrl = request.getRequestURL().toString();
+            String urlCategory = bookPost.getBookCategory().toString().toLowerCase();
+            String redirectUrl = currentUrl.replace("/newBookPost", "/"+urlCategory);
+            response.put("status", "saveOk");
+            response.put("response", redirectUrl);
+
+//            , @Login Member loginMember
+//            bookPost.setWriterEmail(loginMember.getEmail());
+            bookPost.setWriterEmail("admin@admin");
+
+            bookPostMapper.save(bookPost);  //id저장됨
+            bookPostService.fileSave(bookPost);
+
+            //return "/bookpost/categoryName";
+        }
+
+        return response;
     }
 }

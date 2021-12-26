@@ -27,11 +27,16 @@ a{ text-decoration:none; }
 
 #editorForm .inputcol .col { position:relative; }
 #editorForm .inputcol .col .invalid-tooltip {
+    display:none;
     position:absolute;
-    animation: fadeout 3s ease-out;
+}
+.ani {
+    display:block!important;
+    animation: fadeout 2s ease-out;
     animation-fill-mode: forwards;
 }
 @KeyFrames fadeout {
     from{ opacity:1; }
     to { opacity:0; }
 }
+
