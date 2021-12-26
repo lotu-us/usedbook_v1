@@ -61,12 +61,14 @@ public class MemberService {
         String[] fields = {"email", "name", "password"};
         //defaultErrorAdd
         for (String field : fields) {
-            StringBuilder errorMessage = new StringBuilder("");
-            List<FieldError> fieldErrors = bindingResult.getFieldErrors(field);
-            for (FieldError fieldError : fieldErrors) {
-                errorMessage.append(fieldError.getDefaultMessage()+"<br>");
+            if(bindingResult.hasFieldErrors(field)) {
+                StringBuilder errorMessage = new StringBuilder("");
+                List<FieldError> fieldErrors = bindingResult.getFieldErrors(field);
+                for (FieldError fieldError : fieldErrors) {
+                    errorMessage.append(fieldError.getDefaultMessage() + "<br>");
+                }
+                response.add(new ValidCheckResponse(false, field, errorMessage.toString()));
             }
-            response.add(new ValidCheckResponse(false, field, errorMessage.toString()));
         }
 
         //custom
