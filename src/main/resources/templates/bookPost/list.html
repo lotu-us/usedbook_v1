@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="fragments/head :: head('메인') "></div>
+    <style>
+        table { vertical-align: middle; }
+        thead tr th{ text-align:center; font-size:0.85rem; }
+        .col1{ text-align:center; width:10%; font-size:0.8rem; }
+
+        .col3{ width:20%; }
+        .col4{ text-align:center; width:15%; }
+        .col4 span{ font-size:0.8rem; }
+        .col5{ text-align:center; width:10%; font-size:0.8rem; }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/nav :: menu(${categoryName})"></div>
+
+
+<div class="container mt-4">
+    <h2 th:text="${categoryNameKor}" class="mb-4"></h2>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">날짜</th>
+            <th scope="col">조회</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="list : ${lists}">
+            <th class="col1" scope="row" th:text="${list.id}">1</th>
+            <td class="col2">
+                <a href="#" th:href="@{/bookPost/detail/{bookPostId}(bookPostId=${list.id})}" th:text="${list.bookName}">Mark</a>
+            </td>
+            <td class="col3" th:text="${list.writerEmail}">Otto</td>
+            <td class="col4" th:with="createTime = ${#strings.replace(list.createTime, '.0', '')}">
+                <span th:text="${#strings.substring(createTime, 2, 19)}">test</span>
+            </td>
+            <td class="col5" th:text="1010">Otto</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
