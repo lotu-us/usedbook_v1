@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import javax.validation.constraints.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -36,4 +37,5 @@ public class BookPost {
 
     private List<MultipartFile> fileList;
 
+    private String createTime;
 }

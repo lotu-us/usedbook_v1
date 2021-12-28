@@ -14,9 +14,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     private static final String[] whitelist = {"/css/**", "/js/**", "/img/**",
             "/", "/login", "/logout", "/findPassword", "/register", "/registerOk", "/register/check",
-            "/member/*",
-            "/bookPost/*",
-            "/category/*",
+            "/member/**",
+            "/bookPost/**",
+            "/category/**",
             "/mybatis",
             "/error"
     };

@@ -2,6 +2,11 @@ package thwjd.usedbook.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -16,6 +21,8 @@ import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -84,5 +91,24 @@ public class BookPostService {
             order--;
         }
     }
+
+
+
+    public ResponseEntity<Resource> fileFoundTest(String imgName) throws IOException {
+        String uploadPath = Paths.get("D:", "projectEn", "usedbook", "userUploadImg").toString();
+        Resource resource = new FileSystemResource(uploadPath + File.separator + imgName);
+
+        if(!resource.exists()){
+            return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        Path savePath = Paths.get(uploadPath + File.separator + imgName).toAbsolutePath();
+        headers.add("Content-Type", Files.probeContentType(savePath));
+
+        return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+    }
+
+
 
 }
