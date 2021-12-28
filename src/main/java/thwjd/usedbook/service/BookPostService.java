@@ -13,8 +13,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 import thwjd.usedbook.entity.BookPost;
 import thwjd.usedbook.entity.BookPostFile;
+import thwjd.usedbook.entity.Pagination;
 import thwjd.usedbook.entity.ValidCheckResponse;
 import thwjd.usedbook.repository.BookPostFileRepositoryMapper;
+import thwjd.usedbook.repository.BookPostRepositoryMapper;
 
 import javax.servlet.ServletContext;
 import java.awt.print.Book;
@@ -33,6 +35,7 @@ import java.util.UUID;
 @Service
 public class BookPostService {
 
+    @Autowired BookPostRepositoryMapper bookPostMapper;
     @Autowired BookPostFileRepositoryMapper bookPostFileMapper;
 
     public List newBookPostValidCheck(BookPost bookPost, BindingResult bindingResult){
@@ -111,7 +114,24 @@ public class BookPostService {
 
 
 
+    public String pageInit(String categoryName, Pagination pagination){
+        pagination.setCategory(categoryName);
+        pagination.setLastPageNum(bookPostMapper.findByCategoryCount(pagination.getCategory()));
 
+        //log.info("pagination.getPage()={}", pagination.getPage());
+        if(pagination.getPage() < 1){
+            return "category/"+categoryName+"?page=1";
+        }
+        if(pagination.getPage() > pagination.getLastPageNum()){
+            return "category/"+categoryName+"?page="+pagination.getLastPageNum();
+        }
+
+        pagination.setPerFirstRow(pagination.getPage());
+        pagination.setListStartNum(pagination.getPage());
+        pagination.setListEndNum();
+
+        return null;
+    }
 
 
 }

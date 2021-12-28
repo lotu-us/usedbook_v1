@@ -28,7 +28,7 @@ public interface BookPostRepositoryMapper {
     @Select("select count(*) from bookpost where bookcategory=#{category}")
     Integer findByCategoryCount(BookCategory category);
 
-    @Select("select * from bookpost where bookcategory=#{category} order by ${orderString} limit #{limit} offset #{offset}")
+    @Select("select * from bookpost where bookcategory=#{category} order by ${orderString} limit #{perRows} offset #{perFirstRow}")
     //$는 값만 반환, #은 ""을 포함하여 반환
     List<BookPost> findByPagination(Pagination pagination);
 

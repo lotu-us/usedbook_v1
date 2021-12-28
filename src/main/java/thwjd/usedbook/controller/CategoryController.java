@@ -5,15 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import thwjd.usedbook.annotation.Login;
-import thwjd.usedbook.entity.BookCategory;
 import thwjd.usedbook.entity.BookPost;
-import thwjd.usedbook.entity.Member;
 import thwjd.usedbook.entity.Pagination;
 import thwjd.usedbook.repository.BookPostRepositoryMapper;
 import thwjd.usedbook.service.BookPostService;
 
-import java.awt.print.Book;
 import java.util.List;
 
 @Slf4j
@@ -27,18 +23,10 @@ public class CategoryController {
     @GetMapping("/{categoryName}")
     public String category(@PathVariable String categoryName, @ModelAttribute Pagination pagination, Model model){
 
-        pagination.setCategory(categoryName);
-        pagination.setMaxPageNum(bookPostMapper.findByCategoryCount(pagination.getCategory()));
-
-        if(pagination.getPage() < 1){
-            pagination.setPage(1);
+        String redirectUrl = bookPostService.pageInit(categoryName, pagination);
+        if(redirectUrl != null){
+            return "redirect:/"+redirectUrl;
         }
-        if(pagination.getPage() > pagination.getMaxPageNum()){
-            pagination.setPage(pagination.getMaxPageNum());
-        }
-
-        pagination.setOffset(pagination.getPage());
-        //log.info("pagination={}", pagination);
 
         List<BookPost> lists = bookPostMapper.findByPagination(pagination);
         model.addAttribute("lists", lists);
@@ -46,5 +34,12 @@ public class CategoryController {
         model.addAttribute("next", pagination.getPage()+1);
 
         return "bookPost/list";
+    }
+
+    @PostMapping("/listOrder")
+    @ResponseBody
+    public List listOrder(@ModelAttribute Pagination pagination){
+        List<BookPost> lists = bookPostMapper.findByPagination(pagination);
+        return null;
     }
 }
