@@ -21,25 +21,22 @@ public class CategoryController {
     @Autowired BookPostService bookPostService;
 
     @GetMapping("/{categoryName}")
-    public String category(@PathVariable String categoryName, @ModelAttribute Pagination pagination, Model model){
-
-        String redirectUrl = bookPostService.pageInit(categoryName, pagination);
+    public String category(@PathVariable String categoryName, @ModelAttribute Pagination pagination){
+        String redirectUrl = bookPostService.pageProcess(categoryName, pagination);
         if(redirectUrl != null){
             return "redirect:/"+redirectUrl;
         }
-
-        List<BookPost> lists = bookPostMapper.findByPagination(pagination);
-        model.addAttribute("lists", lists);
-        model.addAttribute("preview", pagination.getPage()-1);
-        model.addAttribute("next", pagination.getPage()+1);
-
         return "bookPost/list";
     }
 
-    @PostMapping("/listOrder")
-    @ResponseBody
-    public List listOrder(@ModelAttribute Pagination pagination){
+    @GetMapping("/listOrder")
+    //@ResponseBody
+    public String listOrder(@RequestParam String categoryName, @ModelAttribute Pagination pagination, Model model){
+        bookPostService.pageProcess(categoryName, pagination);
+        //log.info("pagination={}", pagination.getOrderString());
         List<BookPost> lists = bookPostMapper.findByPagination(pagination);
-        return null;
+        model.addAttribute("lists", lists);
+
+        return "bookPost/list :: #listTable";
     }
 }

@@ -38,4 +38,6 @@ public class BookPost {
     private List<MultipartFile> fileList;
 
     private String createTime;
+
+    private Integer viewCount=0;
 }

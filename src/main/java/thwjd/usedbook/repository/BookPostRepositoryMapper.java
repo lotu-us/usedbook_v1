@@ -1,9 +1,6 @@
 package thwjd.usedbook.repository;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import thwjd.usedbook.entity.BookCategory;
 import thwjd.usedbook.entity.BookPost;
@@ -35,4 +32,7 @@ public interface BookPostRepositoryMapper {
 
     @Select("select * from bookpost where id=#{id}")
     BookPost findById(Long id);
+
+    @Update("update bookpost set viewcount = #{viewCount} where id=#{id}")
+    void viewPlus(BookPost bookPost);
 }

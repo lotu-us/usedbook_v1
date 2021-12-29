@@ -86,6 +86,9 @@ public class BookPostController {
     @GetMapping("/detail/{bookPostId}")
     public String detail(@PathVariable Long bookPostId, Model model){
         BookPost byId = bookPostMapper.findById(bookPostId);
+
+        byId.setViewCount(byId.getViewCount() +1);
+        bookPostMapper.viewPlus(byId);
         model.addAttribute("bookPost", byId);
 
         List<BookPostFile> byIdFile = bookPostFileMapper.findById(bookPostId);

@@ -18,12 +18,8 @@ import thwjd.usedbook.entity.ValidCheckResponse;
 import thwjd.usedbook.repository.BookPostFileRepositoryMapper;
 import thwjd.usedbook.repository.BookPostRepositoryMapper;
 
-import javax.servlet.ServletContext;
-import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -114,21 +110,19 @@ public class BookPostService {
 
 
 
-    public String pageInit(String categoryName, Pagination pagination){
+    public String pageProcess(String categoryName, Pagination pagination){
         pagination.setCategory(categoryName);
-        pagination.setLastPageNum(bookPostMapper.findByCategoryCount(pagination.getCategory()));
+        pagination.setListLastNum(bookPostMapper.findByCategoryCount(pagination.getCategory()));
 
         //log.info("pagination.getPage()={}", pagination.getPage());
         if(pagination.getPage() < 1){
             return "category/"+categoryName+"?page=1";
         }
-        if(pagination.getPage() > pagination.getLastPageNum()){
-            return "category/"+categoryName+"?page="+pagination.getLastPageNum();
+        if(pagination.getPage() > pagination.getListLastNum()){
+            return "category/"+categoryName+"?page="+pagination.getListLastNum();
         }
 
-        pagination.setPerFirstRow(pagination.getPage());
-        pagination.setListStartNum(pagination.getPage());
-        pagination.setListEndNum();
+        pagination.setterProcess();
 
         return null;
     }

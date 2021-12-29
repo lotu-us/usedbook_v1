@@ -1,44 +1,53 @@
+$(window).on("load", function(){
+    loadList();
+});
 
-$("#createtime").on("click", function(){
-    var className = $(this).attr("class");
-    if(className == null || className == "" || className == undefined){
-        $(this).addClass("asc");
+$("#bookname, #writeremail, #createtime, #viewcount").on("click", function(){
+    loadList($(this));
+});
+
+
+function loadList(element){
+    var idName = $(element).attr("id");
+    var className = $(element).attr("class");
+    var span = $($(element).children("span"));
+    var orderString = "";
+
+    if(element == null || element == undefined){
+            orderString = "createtime desc";
+    }else{
+        if(className == "asc"){
+            $(element).removeClass("asc").addClass("desc");
+            span.text("↓");
+        }
+        if(className == "desc"){
+            $(element).removeClass("desc").addClass("asc");
+            span.text("↑");
+        }
+
+        var timeMethod = $("#createtime").attr("class");
+        if(idName == "createtime"){
+            orderString = "createtime "+timeMethod;
+        }else{
+            orderString = $(element).attr("id")+" "+$(element).attr("class")+", createtime "+timeMethod;
+        }
     }
-    if(className == "asc"){
-        $(this).removeClass("asc");
-        $(this).addClass("desc");
-    }
-    if(className == "desc"){
-        $(this).removeClass("desc");
-    }
+    //console.log(orderString);
+
+    var page = $(".pagination li.active a").text();
+    var categoryName = $(".categoryName").attr("id").toLowerCase();
+
+    var queryParam = {
+        "orderString":orderString,
+        "page":page,
+        "categoryName":categoryName
+    };
 
      $.ajax({
-        type:"POST",
+        type:"GET",
         url:"/category/listOrder",
-        contentType: 'application/json',
-        data: JSON.stringify(member),
-        success: function(data) {
-          var inputs = "#"+elementId;
-          var helps = "#"+elementId+"Help";
-          $(helps).css("display", "block");
-
-          data.forEach(e => {
-            if(elementId == e.field){
-              if(e.status == true){
-                $(inputs).addClass("is-valid").removeClass("is-invalid");
-                $(helps).addClass("valid-feedback").removeClass("invalid-feedback");
-                $(helps).html(""+e.message);
-              }else{
-                $(inputs).addClass("is-invalid").removeClass("is-valid");
-                $(helps).addClass("invalid-feedback").removeClass("valid-feedback");
-                $(helps).html(""+e.message);
-              }
-            }
-          });
-
-        },
-        error: function(){
-
-        }
+        data: queryParam,
+    }).done(function(fragment){
+        $("#listTable").replaceWith(fragment);
     });
-});
+}
