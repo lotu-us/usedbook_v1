@@ -20,6 +20,8 @@ import thwjd.usedbook.repository.BookPostRepositoryMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -107,6 +109,50 @@ public class BookPostService {
 
         return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
     }
+
+
+    public void fileUpdate(BookPost bookPost) throws IOException {
+        //String uploadPath = Paths.get("D:", "projectEn", "usedbook", "src", "main", "resources", "userUploadImg").toString();
+        String uploadPath = Paths.get("D:", "projectEn", "usedbook", "userUploadImg").toString();
+
+        List<BookPostFile> byId = bookPostFileMapper.findById(bookPost.getId());
+        int order = 10 - byId.size() -1;
+
+        List<String> removeFileList = bookPost.getRemoveFileList();
+        if(removeFileList != null){
+            for (String removeFile : removeFileList) {
+                String temp = removeFile.replace("/bookPost/getImage/", "");
+                temp = URLDecoder.decode(temp, StandardCharsets.UTF_8);
+                bookPostFileMapper.removeFile(bookPost.getId(), temp);
+            }
+        }
+
+        if(bookPost.getFileList() != null){
+            for (MultipartFile multipartFile : bookPost.getFileList()) {
+                UUID uuid = UUID.randomUUID();
+                String filename = uuid + "_" + order + "_" + multipartFile.getOriginalFilename();
+                Path savePath = Paths.get(uploadPath + File.separator + filename).toAbsolutePath();
+
+                multipartFile.transferTo(savePath.toFile());
+                //MultipartFile.transferTo()는 요청 시점의 임시 파일을 로컬 파일 시스템에 영구적으로 복사하는 역할을 수행한다.
+                // 단 한번만 실행되며 두번째 실행부터는 성공을 보장할 수 없다.
+                //Embedded Tomcat을 컨테이너로 사용할 경우 DiskFileItem.write()가 실제 역할을 수행한다.
+                // I/O 사용을 최소화하기 위해 파일 이동을 시도하며, 이동이 불가능할 경우 파일 복사를 진행한다.
+
+                BookPostFile bookPostFile = new BookPostFile(
+                        bookPost.getId(),
+                        bookPost.getWriterEmail(),
+                        uploadPath,
+                        filename
+                );
+                bookPostFileMapper.save(bookPostFile);
+                order--;
+            }
+        }
+
+    }
+
+
 
 
 

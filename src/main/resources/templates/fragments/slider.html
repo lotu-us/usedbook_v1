@@ -99,31 +99,50 @@
 
 
 
-<div th:fragment="previewSlider-write(swiperName)" class="previewSlider write">
+<div th:fragment="previewSlider-write(swiperName, fileList)" class="previewSlider write">
     <div class="swiper" th:id="${swiperName}">
         <div class="swiper-wrapper">
 
-            <div class="swiper-slide card shadow-sm remove-position">
-                <div th:id="'removeSlide-'+${swiperName}" class="removeSlideImg">
-                    <i class="fas fa-times"></i>
+            <th:block th:if="${fileList} == null">  <!--/* 입력 시 */-->
+                <div class="swiper-slide card shadow-sm remove-position">
+                    <div th:id="'removeSlide-'+${swiperName}" class="removeSlideImg">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <img class="slideImg" src="https://plchldr.co/i/300x300">
                 </div>
-                <img class="slideImg" src="https://plchldr.co/i/300x300">
-            </div>
+            </th:block>
+
+            <th:block th:if="${fileList} != null">  <!--/* 수정 시 */-->
+                <div class="swiper-slide card shadow-sm remove-position" th:each="file : ${fileList}">
+                    <div th:id="'removeSlide-'+${swiperName}" class="removeSlideImg">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <img class="slideImg" th:src="@{/bookPost/getImage/{imgName}(imgName=${file.fileName})}">
+                </div>
+            </th:block>
 
         </div>
     </div>
 </div>
 
 
-<div th:fragment="previewSliderList-write(swiperName)" class="previewSliderList write">
+<div th:fragment="previewSliderList-write(swiperName, fileList)" class="previewSliderList write">
     <div class="swiper-cover">
         <div class="swiper" th:id="${swiperName}">
             <div class="swiper-wrapper">
 
-                <div class="swiper-slide card shadow-sm">
-                    <img class="addSlideImg" th:id="'addSlideImg-'+${swiperName}"
-                         th:src="@{/img/smallsliderplus.jpg}">
-                </div>
+                <th:block th:if="${fileList} != null">  <!--/* 수정 시 */-->
+                    <div class="swiper-slide card shadow-sm" th:each="file : ${fileList}">
+                        <img class="slideImg"
+                             th:src="@{/bookPost/getImage/{imgName}(imgName=${file.fileName})}">
+                    </div>
+                </th:block>
+
+                 <!--/* 입력 시 */-->
+                    <div class="swiper-slide card shadow-sm">
+                        <img class="addSlideImg" th:id="'addSlideImg-'+${swiperName}"
+                             th:src="@{/img/smallsliderplus.jpg}">
+                    </div>
 
             </div>
         </div>

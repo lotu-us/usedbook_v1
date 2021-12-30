@@ -36,4 +36,12 @@ public interface BookPostRepositoryMapper {
 
     @Update("update bookpost set viewcount = #{viewCount} where id=#{id}")
     void viewPlus(BookPost bookPost);
+
+    @Update("update bookpost set bookname=#{bookName}, bookcategory=#{bookCategory}, " +
+            "bookprice=#{bookPrice}, bookdescription=#{bookDescription}, createtime=#{createTime}" +
+            "where id=#{id}")
+    int update(BookPost bookPost);
+
+    @Delete("delete from bookpost where id = #{id}")
+    int delete(Long bookPostId);
 }

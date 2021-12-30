@@ -16,7 +16,8 @@ inputs.on("click", function(){
 
 var validCheck = 0;
 $("#editorFormSubmit").click(function(event){
-    if(uploadFileMap.size < imgCountMin){
+    var imgCount = $(".previewSlider.write .slideImg").length;
+    if(imgCount < imgCountMin){
         alert("이미지는 최소 1개 이상 업로드해야합니다.");
         return false;
     }
@@ -26,14 +27,23 @@ $("#editorFormSubmit").click(function(event){
     uploadFileMap.forEach(function(v, k){
         formData.append("fileList", v);
     });
+
+    removeFileArray.forEach(function(v){
+        formData.append("removeFileList", v);
+    });
 //    console.log(uploadFileMap);
 //    console.log($("#fileUploadBtn")[0].files);
 //    for (var pair of formData.entries()) {
 //        console.log(pair[0]+ ', ' + pair[1]);
 //    }
 
+    var url = "/bookPost/write";
+    if($(location).attr('href').includes("/edit") == true){
+        url = "/bookPost/edit"
+    }
+
     $.ajax({
-        url: "/bookPost/write",
+        url: url,
         type: "POST",
         data: formData,    //formData는 반드시 ajax랑 사용@!!
         contentType: false,

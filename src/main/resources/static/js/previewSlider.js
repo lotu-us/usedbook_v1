@@ -40,11 +40,14 @@ var imgCountMin = 1;
 var imgCountMax = 10;
 var imgCountMaxMessage = "이미지는 10개까지만 업로드 가능합니다.";
 var uploadFileMap = new Map();
+var removeFileArray = new Array();
 
 //파일추가==========================================================================
 // 파일 개수 확인한 후 파일 선택
 $(".addSlideImg").on("click", function(){
-    if(uploadFileMap.size >= imgCountMax){
+    var imgCount = $(".previewSlider.write .slideImg").length;
+    //console.log(imgCount+"개 업로드되어있음");
+    if(imgCount >= imgCountMax){
         alert(imgCountMaxMessage);
         return;
     }
@@ -143,6 +146,10 @@ function removeSlide(thisElement){
     var blobsrc = $(".previewSlider.write .swiper-slide-active img").attr("src");
     uploadFileMap.delete(blobsrc);
 
+    removeFileArray.push($(thisElement).parent().children("img").attr("src"));
+
     $(".previewSlider.write .swiper-slide").eq(imgIndex).remove();
     $(".previewSliderList.write .swiper-slide").eq(imgIndex).remove();
 }
+
+

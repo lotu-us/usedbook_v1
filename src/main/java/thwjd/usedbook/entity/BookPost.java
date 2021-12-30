@@ -40,4 +40,6 @@ public class BookPost {
     private String createTime;
 
     private Integer viewCount=0;
+
+    private List<String> removeFileList;
 }

@@ -1,9 +1,6 @@
 package thwjd.usedbook.repository;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import thwjd.usedbook.entity.BookPostFile;
 
@@ -20,4 +17,10 @@ public interface BookPostFileRepositoryMapper {
 
     @Select("select * from bookpostfile where bookpostid = #{bookPostId}")
     List<BookPostFile> findById(Long bookPostId);
+
+    @Delete("delete from bookpostfile where bookpostid = #{bookPostId} and filename = #{fileName}")
+    int removeFile(Long bookPostId, String fileName);
+
+    @Delete("delete from bookpostfile where bookpostid = #{bookPostId}")
+    int delete(Long bookPostId);
 }

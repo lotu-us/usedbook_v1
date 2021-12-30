@@ -106,5 +106,65 @@ public class BookPostController {
         //http://localhost:8080/bookPost/imgtest/69221ce3-e582-4ce5-9a56-3730b5ba53ec_9_%EC%BD%94%EB%94%A9%EB%A7%88%EC%A7%80%EB%A7%89.jpg
     }
 
+    @GetMapping("/edit/{bookPostId}")
+    public String edit(@PathVariable Long bookPostId, Model model){
+        BookPost byId = bookPostMapper.findById(bookPostId);
+        model.addAttribute("bookPost", byId);
+
+        List<BookPostFile> byIdFile = bookPostFileMapper.findById(bookPostId);
+        model.addAttribute("fileList", byIdFile);
+
+        return "bookPost/write";
+    }
+    @PostMapping("/edit")
+    @ResponseBody
+    public Map editSave(@Validated @ModelAttribute BookPost bookPost, BindingResult bindingResult,
+                         HttpServletRequest request, @Login Member loginMember) throws IOException {
+        Map<String, Object> response = new HashMap<>();
+
+        List<BookPostFile> byId = bookPostFileMapper.findById(bookPost.getId());
+
+        if(byId.size() > 10){
+            response.put("status", "validPhoto");
+            response.put("response", "사진은 10개까지만 업로드 가능합니다.");
+        }
+
+        List validList = bookPostService.newBookPostValidCheck(bookPost, bindingResult);
+        if(validList.size() > 0){
+            response.put("status", "valid");
+            response.put("response", validList);
+        }
+
+        if(validList.size() == 0){
+            if(loginMember != null){
+                bookPost.setWriterEmail(loginMember.getEmail());
+            }else{
+                bookPost.setWriterEmail("익명@admin");
+            }
+
+            bookPostMapper.update(bookPost);
+            bookPostService.fileUpdate(bookPost);
+
+            String currentUrl = request.getRequestURL().toString();
+            String redirectUrl = currentUrl.replace("/bookPost/edit", "/bookPost/detail/"+bookPost.getId());
+            response.put("status", "saveOk");
+            response.put("response", redirectUrl);
+        }
+
+        return response;
+    }
+
+
+    @GetMapping("/remove/{bookPostId}")
+    public String remove(@PathVariable Long bookPostId){
+
+        int deletePost = bookPostMapper.delete(bookPostId);
+        int deleteFiles = bookPostFileMapper.delete(bookPostId);
+        if(deletePost == 1 && deleteFiles >= 1){
+            return "bookPost/list";
+        }
+        return null;
+    }
+
 
 }
