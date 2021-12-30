@@ -1,9 +1,7 @@
 package thwjd.usedbook.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,19 +12,20 @@ import org.springframework.web.bind.annotation.*;
 import thwjd.usedbook.annotation.Login;
 import thwjd.usedbook.entity.BookPost;
 import thwjd.usedbook.entity.BookPostFile;
+import thwjd.usedbook.entity.Comment;
 import thwjd.usedbook.entity.Member;
 import thwjd.usedbook.repository.BookPostFileRepositoryMapper;
 import thwjd.usedbook.repository.BookPostRepositoryMapper;
+import thwjd.usedbook.repository.CommentRepositoryMapper;
 import thwjd.usedbook.service.BookPostService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -36,6 +35,7 @@ public class BookPostController {
     @Autowired BookPostService bookPostService;
     @Autowired BookPostRepositoryMapper bookPostMapper;
     @Autowired BookPostFileRepositoryMapper bookPostFileMapper;
+    @Autowired CommentRepositoryMapper commentMapper;
 
     @GetMapping("/write")
     public String writeForm(@ModelAttribute BookPost bookPost){
@@ -93,6 +93,10 @@ public class BookPostController {
 
         List<BookPostFile> byIdFile = bookPostFileMapper.findById(bookPostId);
         model.addAttribute("fileList", byIdFile);
+
+        List<Comment> all = commentMapper.findAll(bookPostId);
+        model.addAttribute("commentLists", all);
+
         return "bookPost/detail";
     }
 
@@ -101,7 +105,6 @@ public class BookPostController {
         return bookPostService.fileFoundTest(imgName);
         //http://localhost:8080/bookPost/imgtest/69221ce3-e582-4ce5-9a56-3730b5ba53ec_9_%EC%BD%94%EB%94%A9%EB%A7%88%EC%A7%80%EB%A7%89.jpg
     }
-
 
 
 }
