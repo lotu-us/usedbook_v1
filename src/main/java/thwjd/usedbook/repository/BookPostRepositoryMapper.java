@@ -22,13 +22,14 @@ public interface BookPostRepositoryMapper {
     @Select("select * from bookpost")
     List<BookPost> findAll();
 
-    @Select("select count(*) from bookpost where bookcategory=#{category}")
-    Integer findByCategoryCount(BookCategory category);
+    @Select("select count(*) from bookpost where bookcategory=#{category} ${search}")
+    Integer findByCategoryCount(Pagination pagination);
 
-    @Select("select * from bookpost where bookcategory=#{category} order by ${orderString} limit #{perRows} offset #{perFirstRow}")
-    //$는 값만 반환, #은 ""을 포함하여 반환
-    List<BookPost> findByPagination(Pagination pagination);
-
+    @Select("select * from bookpost " +
+            "where bookcategory=#{category} ${search} " +
+            "order by ${order} limit #{perRows} offset #{perFirstRow}")
+        //$는 값만 반환, #은 ""을 포함하여 반환
+    List<BookPost> findByPaginationAndSearch(Pagination pagination);
 
     @Select("select * from bookpost where id=#{id}")
     BookPost findById(Long id);

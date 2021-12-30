@@ -112,14 +112,19 @@ public class BookPostService {
 
     public String pageProcess(String categoryName, Pagination pagination){
         pagination.setCategory(categoryName);
-        pagination.setListLastNum(bookPostMapper.findByCategoryCount(pagination.getCategory()));
+        pagination.setSearch();
+        pagination.setListLastNum(bookPostMapper.findByCategoryCount(pagination));
 
         //log.info("pagination.getPage()={}", pagination.getPage());
         if(pagination.getPage() < 1){
-            return "category/"+categoryName+"?page=1";
+            return "category/"+categoryName+"?page=1" +
+                    "&searchRange="+pagination.getSearchRange()+
+                    "&searchText="+pagination.getSearchText();
         }
         if(pagination.getPage() > pagination.getListLastNum()){
-            return "category/"+categoryName+"?page="+pagination.getListLastNum();
+            return "category/"+categoryName+"?page="+pagination.getListLastNum()+
+                    "&searchRange="+pagination.getSearchRange()+
+                    "&searchText="+pagination.getSearchText();
         }
 
         pagination.setterProcess();

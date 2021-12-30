@@ -13,11 +13,17 @@ public class Pagination {
     private Integer listStartNum;       //한페이지의 리스트 시작번호
     private Integer listEndNum;         //한페이지의 리스트 끝번호
     private Integer listLimit = 5;   //한페이지에 보여줄 리스트 수
-
     private Integer listLastNum;        //마지막페이지번호
-    private String orderString = "createtime desc";
+
+    private String order = "createtime desc";
+
+    private String searchText = "";
+    private String searchRange = "1";
+    private String search = "";
+
     private Integer preview;
     private Integer next;
+
 
 
     public void setterProcess(){
@@ -27,7 +33,6 @@ public class Pagination {
         setPreview();
         setNext();
     }
-
 
     public void setCategory(String categoryName) {
         BookCategory categoryUpper = BookCategory.valueOf(categoryName.toUpperCase());
@@ -66,5 +71,41 @@ public class Pagination {
 
     private void setNext() {
         this.next = this.page +1;
+    }
+
+    public void setSearch() {
+        String result = "";
+        String findRange = findRange(this.getSearchRange());
+
+        if(this.searchText.equals("")){ //검색값이 없을 때
+            result = "";
+        }else{  //검색값이 있을 때
+            boolean contains = findRange.contains(",");
+            if(contains == false){
+                result = "and "+findRange+" like '%"+this.searchText+"%'";
+            }else{
+                String[] split = findRange.split(",");
+                result = "and (";
+                for (int i=0; i<split.length; i++) {
+                    result = result + split[i] + " like '%"+searchText+"%'";
+                    if(i != (split.length-1)){
+                        result = result + " or ";
+                    }else{
+                        result = result + " )";
+                    }
+                }
+            }
+        }
+        this.search = result ;
+    }
+
+    private String findRange(String searchRange) {
+        switch (searchRange){
+            case "1" : return "bookname";
+            case "2" : return "writeremail";
+            case "3" : return "bookdescription";
+            case "4" : return "bookname,bookdescription";
+            default:return "bookname";
+        }
     }
 }

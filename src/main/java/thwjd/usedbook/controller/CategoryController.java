@@ -10,6 +10,7 @@ import thwjd.usedbook.entity.Pagination;
 import thwjd.usedbook.repository.BookPostRepositoryMapper;
 import thwjd.usedbook.service.BookPostService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -21,22 +22,31 @@ public class CategoryController {
     @Autowired BookPostService bookPostService;
 
     @GetMapping("/{categoryName}")
-    public String category(@PathVariable String categoryName, @ModelAttribute Pagination pagination){
+    public String category(@PathVariable String categoryName, @ModelAttribute Pagination pagination, Model model){
+
+        //log.info("order={}", pagination.getOrder());
         String redirectUrl = bookPostService.pageProcess(categoryName, pagination);
         if(redirectUrl != null){
             return "redirect:/"+redirectUrl;
         }
+
+        List<BookPost> lists = bookPostMapper.findByPaginationAndSearch(pagination);
+        model.addAttribute("lists", lists);
+
         return "bookPost/list";
     }
 
     @GetMapping("/listOrder")
     //@ResponseBody
     public String listOrder(@RequestParam String categoryName, @ModelAttribute Pagination pagination, Model model){
+
+        //log.info("order={}", pagination.getOrder());
         bookPostService.pageProcess(categoryName, pagination);
-        //log.info("pagination={}", pagination.getOrderString());
-        List<BookPost> lists = bookPostMapper.findByPagination(pagination);
+
+        List<BookPost> lists = bookPostMapper.findByPaginationAndSearch(pagination);
         model.addAttribute("lists", lists);
 
         return "bookPost/list :: #listTable";
     }
+
 }
