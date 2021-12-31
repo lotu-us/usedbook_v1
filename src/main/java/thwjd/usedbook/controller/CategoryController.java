@@ -6,12 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import thwjd.usedbook.entity.BookPost;
+import thwjd.usedbook.entity.Comment;
 import thwjd.usedbook.entity.Pagination;
 import thwjd.usedbook.repository.BookPostRepositoryMapper;
+import thwjd.usedbook.repository.CommentRepositoryMapper;
 import thwjd.usedbook.service.BookPostService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -20,17 +23,24 @@ public class CategoryController {
 
     @Autowired BookPostRepositoryMapper bookPostMapper;
     @Autowired BookPostService bookPostService;
+    @Autowired CommentRepositoryMapper commentMapper;
 
     @GetMapping("/{categoryName}")
     public String category(@PathVariable String categoryName, @ModelAttribute Pagination pagination, Model model){
 
-        //log.info("order={}", pagination.getOrder());
+        //log.info("bookpostid={}", bookpostid);
+
         String redirectUrl = bookPostService.pageProcess(categoryName, pagination);
+
         if(redirectUrl != null){
             return "redirect:/"+redirectUrl;
         }
 
         List<BookPost> lists = bookPostMapper.findByPaginationAndSearch(pagination);
+        for (BookPost list : lists) {
+            List<Comment> comments = commentMapper.findAll(list.getId());
+            list.setCommentCount(comments.size());
+        }
         model.addAttribute("lists", lists);
 
         return "bookPost/list";

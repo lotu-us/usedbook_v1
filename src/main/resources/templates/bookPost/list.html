@@ -42,7 +42,6 @@
             <th class="col1" scope="row" th:text="${list.id}">1</th>
             <td class="col2">
                 <a href="#" th:href="@{/bookPost/detail/{bookPostId}(bookPostId=${list.id})}" th:text="${list.bookName}">Mark</a>
-                <span style="font-size:0.9em">(<span style="font-size:0.9em" th:text="${list.commentCount}"></span>)</span>
             </td>
             <td class="col3" th:text="${list.writerEmail}">Otto</td>
             <td class="col4" th:with="createTime = ${#strings.replace(list.createTime, '.0', '')}">
