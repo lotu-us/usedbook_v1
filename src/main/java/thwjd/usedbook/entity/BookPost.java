@@ -42,4 +42,6 @@ public class BookPost {
     private Integer viewCount=0;
 
     private List<String> removeFileList;
+
+    private Integer commentCount = 0;
 }
