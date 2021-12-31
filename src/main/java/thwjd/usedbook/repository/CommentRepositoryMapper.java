@@ -9,8 +9,8 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CommentRepositoryMapper {
-    @Insert("insert into comment(bookpostid, retype, writer, content, createtime) " +
-            "values(#{bookPostId}, #{retype}, #{writer}, #{content}, #{createTime})")
+    @Insert("insert into comment(bookpostid, reid, retype, writer, content, createtime) " +
+            "values(#{bookPostId}, #{reid}, #{retype}, #{writer}, #{content}, #{createTime})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void write(Comment comment);
 
@@ -22,4 +22,7 @@ public interface CommentRepositoryMapper {
 
     @Delete("delete from comment where id = #{id}")
     int deleteById(Long id);
+
+    @Update("update comment set content = #{content} where id = #{id}")
+    int update(Long id, String content);
 }

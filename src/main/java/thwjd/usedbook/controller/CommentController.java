@@ -23,6 +23,11 @@ public class CommentController {
     @PostMapping("/write")
     @ResponseBody
     public Comment commentWrite(@RequestBody Comment comment){
+
+        if(comment.getContent().trim().equals("")){
+            return null;
+        }
+
         comment.setWriter("익명댓글@admin");
 
         Date currentTime = new Date();
@@ -38,9 +43,27 @@ public class CommentController {
     @PostMapping("/delete")
     @ResponseBody
     public int commentDelete(@RequestBody Map<String, Long> map){
-//        log.info("commentId={}", map.get("commentId"));
+        //log.info("commentId={}", map.get("commentId"));
         int success = commentMapper.deleteById(map.get("commentId"));
         return success;
+    }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public Comment commentUpdate(@RequestBody Comment comment){
+        if(comment.getContent().trim().equals("")){
+            return null;
+        }
+
+        int update = commentMapper.update(comment.getId(), comment.getContent());
+        //log.info("comment={}", comment);
+
+        Comment byId = commentMapper.findById(comment.getId());
+        if(update >= 1){
+            return byId;
+        }else{
+            return null;
+        }
     }
 
 }

@@ -4,6 +4,8 @@
     <th:block th:include="fragments/head :: head('글 작성하기') "></th:block>
     <th:block th:include="fragments/slider :: slider-head"></th:block>
     <link href="bookPost_detail.css" th:href="@{/css/bookPost_detail.css}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script th:src="@{/js/bookPost_detail.js}"></script>
 </head>
 <body>
 
@@ -41,51 +43,48 @@
             </div>
 
             <div class="row bookCountsRow">
-                <div class="col">
+                <div class="col ">
                     관심 <span>10</span>&nbsp;
                     조회 <span th:text="${bookPost.viewCount}">10</span>
                 </div>
                 <div class="col text-end">
-                    <i class="far fa-bookmark"></i>
+                    <a th:href="@{'/bookPost/edit/'+${bookPost.id}}">수정</a>
+                    <a th:href="@{'/bookPost/remove/'+${bookPost.id}}"
+                        onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</a>
                 </div>
             </div>
 
+            <div class="row commentView" id="commentList">
 
-            <div class="row commentView" id="commentList" >
-                <div class="row commentWrapper" th:each="comment : ${commentLists}">
-                    <div class="col" th:with="createTime = ${#strings.replace(comment.createTime, '.0', '')}">
-                        <p class="mb-2">
-                            <i class="fas fa-user"></i> <span th:text="${comment.writer}">댓글작성자</span>
-                            <span class="ms-3" style="font-size:0.7em;" th:text="${#strings.substring(createTime, 2, 19)}">댓글작성시간</span>
-                        </p>
-                        <p th:text="${comment.content}">댓글내용</p>
-                        <p style="font-size:0.8em;">답글 <span>개수</span></p>
-                    </div>
-                    <div class="col-2">
-                        <span class="commentLink">수정</span>
-                        <span class="commentLink" th:id="'comment'+${comment.id}" onclick="deleteComment(event)">삭제</span>
-                    </div>
-                </div>
             </div>
 
-            <form class="row commentWrite" th:action="@{/comment/write}" method="post">
+            <form class="row commentWrite mainComtWrapper pt-3" th:action="@{/comment/write}" method="post">
                 <div class="col">
-                    <textarea rows="4"; name="content" placeholder="댓글 남기기"></textarea>
-                </div>
-                <div class="col-2">
-                    <input type="hidden" id="bookPostId" th:value="${bookPost.id}">
-                    <button class="btn rounded-4 btn-primary" type="button" th:onclick="commentSubmit()">게시</button>
+                    <p class="mb-2">
+                        <i class="fas fa-user"></i> <span style="font-size:0.8em;">로그인한사람</span>
+                    </p>
+                    <textarea rows="3"; name="content" placeholder="댓글 남기기"></textarea>
                 </div>
             </form>
+
+            <div class="row">
+                <div class="col">
+                    <input type="hidden" id="bookPostId" th:value="${bookPost.id}">
+                    <a class="btn btn-primary btn-sm" onclick="history()" style="width:fit-content;">목록보기</a>
+                </div>
+                <div class="col text-end">
+                    <button class="btn rounded-4 btn-primary btn-sm" type="button" th:onclick="commentSubmit()">게시</button>
+                </div>
+            </div>
 
         </div>
     </div>
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <th:block th:include="fragments/slider :: slider-script"></th:block>
-<script th:src="@{/js/bookPost_detail.js}"></script>
+<!--<script th:src="@{/js/bookPost_detail.js}"></script>-->
 </body>
 </html>
