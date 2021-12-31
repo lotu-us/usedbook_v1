@@ -94,10 +94,13 @@ public class BookPostController {
         List<BookPostFile> byIdFile = bookPostFileMapper.findById(bookPostId);
         model.addAttribute("fileList", byIdFile);
 
-        List<Comment> all = commentMapper.findAll(bookPostId);
-        model.addAttribute("commentLists", all);
-
         return "bookPost/detail";
+    }
+
+    @PostMapping("/detail/commentList")
+    @ResponseBody
+    public List detailComment(@RequestBody Map<String, Long> map){
+        return commentMapper.findAll(map.get("bookPostId"));
     }
 
     @GetMapping("/getImage/{imgName}")
@@ -158,10 +161,12 @@ public class BookPostController {
     @GetMapping("/remove/{bookPostId}")
     public String remove(@PathVariable Long bookPostId){
 
+        BookPost byId = bookPostMapper.findById(bookPostId);
+
         int deletePost = bookPostMapper.delete(bookPostId);
         int deleteFiles = bookPostFileMapper.delete(bookPostId);
-        if(deletePost == 1 && deleteFiles >= 1){
-            return "bookPost/list";
+        if(deletePost == 1 && deleteFiles >= 0){    //1로 수정해야함 테스트로 파일 없는것들이 있어서..
+            return "redirect:/category/"+byId.getBookCategory().getLowerCase();
         }
         return null;
     }
