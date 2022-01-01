@@ -163,9 +163,11 @@ public class BookPostController {
 
         BookPost byId = bookPostMapper.findById(bookPostId);
 
+        bookPostService.fileDelete(bookPostId);
+
         int deletePost = bookPostMapper.delete(bookPostId);
-        int deleteFiles = bookPostFileMapper.delete(bookPostId);
-        if(deletePost == 1 && deleteFiles >= 0){    //1로 수정해야함 테스트로 파일 없는것들이 있어서..
+
+        if(deletePost == 1 ){
             return "redirect:/category/"+byId.getBookCategory().getLowerCase();
         }
         return null;

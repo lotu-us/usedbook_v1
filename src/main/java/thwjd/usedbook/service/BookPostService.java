@@ -179,4 +179,15 @@ public class BookPostService {
     }
 
 
+    public void fileDelete(Long bookPostId) {
+        List<BookPostFile> byId = bookPostFileMapper.findById(bookPostId);
+
+        for (BookPostFile bookPostFile : byId) {
+            File file = new File(bookPostFile.getFilePath() + File.separator + bookPostFile.getFileName());
+
+            if(file.exists()){
+                file.delete();
+            }
+        }
+    }
 }
