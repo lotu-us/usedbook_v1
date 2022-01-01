@@ -19,9 +19,6 @@ public interface BookPostRepositoryMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void save(BookPost bookPost);
 
-    @Select("select * from bookpost")
-    List<BookPost> findAll();
-
     @Select("select count(*) from bookpost where bookcategory=#{category} ${search}")
     Integer findByCategoryCount(Pagination pagination);
 
@@ -30,6 +27,15 @@ public interface BookPostRepositoryMapper {
             "order by ${order} limit #{perRows} offset #{perFirstRow}")
         //$는 값만 반환, #은 ""을 포함하여 반환
     List<BookPost> findByPaginationAndSearch(Pagination pagination);
+
+    @Select("select count(*) from bookpost ${search}")
+    Integer findByAllCount(Pagination pagination);
+
+    @Select("select * from bookpost " +
+            "${search} " +
+            "order by ${order} limit #{perRows} offset #{perFirstRow}")
+        //$는 값만 반환, #은 ""을 포함하여 반환
+    List<BookPost> findByAllPaginationAndSearch(Pagination pagination);
 
     @Select("select * from bookpost where bookcategory = #{category} order by createtime desc limit 10")
     List<BookPost> getIndexList(String category);

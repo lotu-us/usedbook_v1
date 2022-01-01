@@ -152,6 +152,17 @@ public class BookPostService {
 
     }
 
+    public void fileDelete(Long bookPostId) {
+        List<BookPostFile> byId = bookPostFileMapper.findById(bookPostId);
+
+        for (BookPostFile bookPostFile : byId) {
+            File file = new File(bookPostFile.getFilePath() + File.separator + bookPostFile.getFileName());
+
+            if(file.exists()){
+                file.delete();
+            }
+        }
+    }
 
 
 
@@ -178,16 +189,27 @@ public class BookPostService {
         return null;
     }
 
+    public String pageProcess(Pagination pagination){
+        pagination.setSearch();
+        pagination.setListLastNum(bookPostMapper.findByAllCount(pagination));
 
-    public void fileDelete(Long bookPostId) {
-        List<BookPostFile> byId = bookPostFileMapper.findById(bookPostId);
-
-        for (BookPostFile bookPostFile : byId) {
-            File file = new File(bookPostFile.getFilePath() + File.separator + bookPostFile.getFileName());
-
-            if(file.exists()){
-                file.delete();
-            }
+        //log.info("pagination.getPage()={}", pagination.getPage());
+        if(pagination.getPage() < 1){
+            return "search?page=1" +
+                    "&searchRange="+pagination.getSearchRange()+
+                    "&searchText="+pagination.getSearchText();
         }
+        if(pagination.getPage() > pagination.getListLastNum()){
+            return "search?page="+pagination.getListLastNum()+
+                    "&searchRange="+pagination.getSearchRange()+
+                    "&searchText="+pagination.getSearchText();
+        }
+
+        pagination.setterProcess();
+
+        return null;
     }
+
+
+
 }

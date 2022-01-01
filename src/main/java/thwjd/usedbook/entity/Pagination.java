@@ -79,23 +79,24 @@ public class Pagination {
 
         if(this.searchText.equals("")){ //검색값이 없을 때
             result = "";
-        }else{  //검색값이 있을 때
+        }else {  //검색값이 있을 때
             boolean contains = findRange.contains(",");
-            if(contains == false){
-                result = "and "+findRange+" like '%"+this.searchText+"%'";
-            }else{
+            if (contains == false) {
+                result = "where " + findRange + " like '%" + this.searchText + "%'";
+            } else {
                 String[] split = findRange.split(",");
-                result = "and (";
-                for (int i=0; i<split.length; i++) {
-                    result = result + split[i] + " like '%"+searchText+"%'";
-                    if(i != (split.length-1)){
+                result = "where (";
+                for (int i = 0; i < split.length; i++) {
+                    result = result + split[i] + " like '%" + searchText + "%'";
+                    if (i != (split.length - 1)) {
                         result = result + " or ";
-                    }else{
+                    } else {
                         result = result + " )";
                     }
                 }
             }
         }
+
         this.search = result ;
     }
 

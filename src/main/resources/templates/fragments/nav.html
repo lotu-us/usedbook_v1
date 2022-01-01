@@ -18,6 +18,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
+                    <a class="nav-link" th:href="@{/search}" th:classappend="${category}=='allSearch' ? 'custom-active'">통합검색</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" th:href="@{/category/novel}" th:classappend="${category}=='novel' ? 'custom-active'">소설</a>
                 </li>
                 <li class="nav-item">

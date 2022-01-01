@@ -42,6 +42,7 @@ public class CategoryController {
             list.setCommentCount(comments.size());
         }
         model.addAttribute("lists", lists);
+        model.addAttribute("baseUrl", "/category/"+categoryName);
 
         return "bookPost/list";
     }
@@ -50,13 +51,22 @@ public class CategoryController {
     //@ResponseBody
     public String listOrder(@RequestParam String categoryName, @ModelAttribute Pagination pagination, Model model){
 
+        List<BookPost> lists;
         //log.info("order={}", pagination.getOrder());
-        bookPostService.pageProcess(categoryName, pagination);
 
-        List<BookPost> lists = bookPostMapper.findByPaginationAndSearch(pagination);
+        if(categoryName.equals("")){
+            bookPostService.pageProcess(pagination);
+            lists = bookPostMapper.findByAllPaginationAndSearch(pagination);
+        }else{
+            bookPostService.pageProcess(categoryName, pagination);
+            lists = bookPostMapper.findByPaginationAndSearch(pagination);
+        }
+
         model.addAttribute("lists", lists);
-
         return "bookPost/list :: #listTable";
     }
+
+
+
 
 }

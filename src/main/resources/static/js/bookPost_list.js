@@ -8,7 +8,13 @@ $("#bookname, #writeremail, #createtime, #viewcount").on("click", function(){
 
 
 function loadList(element){
-    var categoryName = $(".categoryName").attr("id").toLowerCase();
+    var categoryName;
+    //console.log($(".categoryName"));
+    if($(".categoryName").length != 0){
+        categoryName = $(".categoryName").attr("id").toLowerCase();
+    }else{
+        categoryName = null;
+    }
     var page = $(".pagination li.active a").text();
     var order = orderProcess(element);
     var searchRange = $(".search select").val();
