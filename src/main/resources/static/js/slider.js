@@ -1,5 +1,5 @@
  var Swipers = new Map();
- $('.slider .swiper').each(function(i) {
+ $('.indexSlider .swiper').each(function(i) {
    var thisID = $(this).attr('id');
 
    Swipers.set("slider_"+thisID, new Swiper('#'+thisID, {

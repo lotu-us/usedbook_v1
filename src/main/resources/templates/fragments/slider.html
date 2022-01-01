@@ -11,44 +11,45 @@
 </head>
 <body>
 
-<div class="mt-5 slider" th:fragment="slider(title, swiperName)">
-    <h3 style="font-weight:bold; user-select:none;" th:text="${title}"></h3>
-    <div class="swiper-cover">
-        <div class="swiper " th:id="${swiperName}">
-            <div class="swiper-wrapper">
-                <th:block th:each="num : ${#numbers.sequence(1,10)}">
-                    <div class="swiper-slide">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="https://plchldr.co/i/245x180" alt="plchldr.co" class="swiper-lazy">
-                                <div class="card-body">
-                                    <p class="card-text" style="text-align:left;">
-                                        <span th:text="'책제목'+${num}"></span> <br>
-                                        <span>최상급</span> <br>
-                                        <span>10000원</span>
-                                    </p>
-                                </div>
+
+<div class="swiper-cover" th:fragment="slider(swiperName, bookPostList)">
+    <div class="swiper " th:id="${swiperName}">
+        <div class="swiper-wrapper">
+            <th:block th:each="bookPost : ${bookPostList}">
+                <div class="swiper-slide">
+                    <div class="col">
+                        <a class="card shadow-sm" th:href="@{'/bookPost/detail/'+${bookPost.id}}">
+                            <img class="swiper-lazy" th:if="${bookPost.thumbFileName != null}"
+                                 th:src="@{/bookPost/getImage/{imgName}(imgName=${bookPost.thumbFileName})}">
+                            <img class="swiper-lazy" th:if="${bookPost.thumbFileName == null}"
+                                 src="https://plchldr.co/i/245x180">
+                            <div class="card-body" style="padding:0.5rem;">
+                                <p class="card-text" style="text-align:left;">
+                                    <span th:text="${bookPost.bookName}"></span> <br>
+                                    <span th:text="${bookPost.bookPrice}+'원'"></span>
+                                </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                </th:block>
-            </div>
+                </div>
+            </th:block>
         </div>
-
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev-custom " th:id="prev_+${swiperName}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
-                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-            </svg>
-        </div>
-        <div class="swiper-button-next-custom " th:id="next_+${swiperName}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-            </svg>
-        </div>
-
     </div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev-custom " th:id="prev_+${swiperName}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+        </svg>
+    </div>
+    <div class="swiper-button-next-custom " th:id="next_+${swiperName}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+        </svg>
+    </div>
+
 </div>
+
 
 
 

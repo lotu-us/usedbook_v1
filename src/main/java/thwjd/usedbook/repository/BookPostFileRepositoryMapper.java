@@ -18,6 +18,9 @@ public interface BookPostFileRepositoryMapper {
     @Select("select * from bookpostfile where bookpostid = #{bookPostId}")
     List<BookPostFile> findById(Long bookPostId);
 
+    @Select("select * from bookpostfile where bookpostid = #{bookPostId} limit 1")
+    BookPostFile getOneFile(Long bookPostId);
+
     @Delete("delete from bookpostfile where bookpostid = #{bookPostId} and filename = #{fileName}")
     int removeFile(Long bookPostId, String fileName);
 

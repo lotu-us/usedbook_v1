@@ -33,6 +33,16 @@
 .banner input:focus{ outline:none; }
 
 
+
+.indexSlider{ height:300px; font-size:0.9em; }
+.indexSlider .swiper-cover{ height:85%!important; }
+.indexSlider img{ object-fit:cover; height:75%; width:100%; }
+.indexSlider .card-body{ height:25%; }
+.indexSlider .col { height:100%; }
+.indexSlider .col .card { height:100%; text-decoration:none; color:black; }
+
+
+
 @media screen and (max-width: 768px) {
     .banner{ height:250px; }
     .banner:before { height:250px; }
