@@ -32,4 +32,7 @@ public interface MemberRepositoryMapper {
    //XmlMapper로 구현
    Optional<Member> findByEmailAndName(String email, String name);
 
+   @Select("update member set name=#{name}, password=#{oldPassword} where email=#{email}")
+   Integer update(Member member);
+
 }

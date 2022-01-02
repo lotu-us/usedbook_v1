@@ -11,6 +11,7 @@ import thwjd.usedbook.repository.MemberRepositoryMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -84,6 +85,46 @@ public class MemberService {
         }
         if (!bindingResult.hasFieldErrors("password")) {
             response.add(new ValidCheckResponse(true, "password", "멋진 비밀번호에요"));
+        }
+
+        return response;
+    }
+
+    public List editValidCheck(Member member, BindingResult bindingResult){
+
+        List<ValidCheckResponse> response = new ArrayList<>();
+        Member emailcheck = memberRepository.findByEmail(member.getEmail()).orElse(null);
+
+        String[] fields = {"email", "name", "password"};
+        //defaultErrorAdd
+        for (String field : fields) {
+            if(bindingResult.hasFieldErrors(field)) {
+                StringBuilder errorMessage = new StringBuilder("");
+                List<FieldError> fieldErrors = bindingResult.getFieldErrors(field);
+                for (FieldError fieldError : fieldErrors) {
+                    errorMessage.append(fieldError.getDefaultMessage() + "<br>");
+                }
+                response.add(new ValidCheckResponse(false, field, errorMessage.toString()));
+            }
+        }
+
+        //custom
+        if (!bindingResult.hasFieldErrors("name")) {
+            response.add(new ValidCheckResponse(true, "name", "멋진 이름이에요"));
+        }
+        if(member.getPassword() != null){
+            if (!bindingResult.hasFieldErrors("password")) {
+                if(emailcheck.getPassword().equals(member.getPassword())){
+                    response.add(new ValidCheckResponse(false, "password", "현재 비밀번호와 같습니다"));
+                }else{
+                    response.add(new ValidCheckResponse(true, "password", "멋진 비밀번호에요"));
+                }
+            }
+        }
+        if(!emailcheck.getPassword().equals(member.getOldPassword())){
+            response.add(new ValidCheckResponse(false, "oldPassword", "비밀번호가 일치하지 않습니다"));
+        }else{
+            response.add(new ValidCheckResponse(true, "oldPassword", "비밀번호가 일치합니다"));
         }
 
         return response;

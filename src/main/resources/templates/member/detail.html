@@ -17,21 +17,21 @@
 
 
 <div class="container d-flex justify-content-center p-5 pt-0">
-  <form style="width:400px;" th:action="@{/member/detail}" method="post" id="detailForm" >
+  <div style="width:400px;" id="detailForm" >
     <h1 style="text-align:center; font-weight:bold; margin-top:40px;">회원정보</h1><br>
 
     <div class="row">
       <div class="col text-center">이메일 </div>
-      <div class="col col-9" th:text="${session.loginMember.email}"></div>
+      <div class="col col-9" th:text="${member.email}"></div>
     </div>
 
     <div class="row">
       <div class="col text-center">이름 </div>
-      <div class="col col-9" th:text="${session.loginMember.name}"></div>
+      <div class="col col-9" th:text="${member.name}"></div>
     </div>
 
-    <button class="w-100 mb-2 mt-4 btn btn-lg rounded-4 btn-primary" type="button" onClick="$('#detailForm').submit();">회원정보 수정</button>
-  </form>
+    <a class="w-100 mb-2 mt-4 btn btn-lg rounded-4 btn-primary" type="button" th:href="@{/member/edit}">회원정보 수정</a>
+  </div>
 
 </div>
 

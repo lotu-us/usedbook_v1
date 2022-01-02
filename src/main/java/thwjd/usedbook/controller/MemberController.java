@@ -16,6 +16,7 @@ import thwjd.usedbook.service.MemberService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -109,13 +110,36 @@ public class MemberController {
 
 
     @GetMapping("/member/detail")
-    public String memberDetail(){
+    public String memberDetail(@Login Member loginMember, Model model){
+        Member byId = memberRepository.findById(loginMember.getId());
+        model.addAttribute("member", byId);
         return "member/detail";
     }
-    @PostMapping("/member/detail")
-    public String memberDetailUpdate(@ModelAttribute Member member, BindingResult bindingResult){
 
-        return "redirect:/member/detail";
+    @GetMapping("/member/edit")
+    public String memberEditForm(@Login Member loginMember, Model model){
+        Member byId = memberRepository.findById(loginMember.getId());
+        model.addAttribute("member", byId);
+        return "member/edit";
+    }
+    @PostMapping("/member/edit")
+    public String memberEditSave(@ModelAttribute Member member, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "member/edit";
+        }else {
+            if(!member.getPassword().equals("")){
+                member.setOldPassword(member.getPassword());
+            }
+            memberRepository.update(member);
+            return "redirect:/member/detail";
+        }
+    }
+    //ajax
+    @PostMapping("/member/edit/check")
+    @ResponseBody
+    public List editCheck(@Validated @RequestBody Member member, BindingResult bindingResult) {
+        //log.info("member:"+member);
+        return memberService.editValidCheck(member, bindingResult);
     }
 
 }

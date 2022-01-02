@@ -1,6 +1,7 @@
 package thwjd.usedbook.entity;
 
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -22,6 +23,8 @@ public class Member {
     @Size(min=2, message = "2글자 이상이어야합니다.")
     private String password;
 
+    @Size(min=2, message = "2글자 이상이어야합니다.")
+    private String oldPassword;
 
     public Member(){
 

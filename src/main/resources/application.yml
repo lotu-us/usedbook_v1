@@ -1,7 +1,7 @@
 server:
   servlet:
     session:
-      timeout: 60  # 기본값은 30m(30분) m을 붙이지 않으면 초단위로 설정됨. 최소 60초 이상일 것
+      timeout: 30m  # 기본값은 30m(30분) m을 붙이지 않으면 초단위로 설정됨. 최소 60초 이상일 것
       tracking-modes: cookie  #최초접속 시 url에 jsession안붙게
 
 
