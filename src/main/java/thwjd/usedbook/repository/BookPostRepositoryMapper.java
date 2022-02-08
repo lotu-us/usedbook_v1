@@ -47,7 +47,7 @@ public interface BookPostRepositoryMapper {
     void viewPlus(BookPost bookPost);
 
     @Update("update bookpost set bookname=#{bookName}, bookcategory=#{bookCategory}, " +
-            "bookprice=#{bookPrice}, bookdescription=#{bookDescription}, createtime=#{createTime}" +
+            "bookprice=#{bookPrice}, bookdescription=#{bookDescription} " +
             "where id=#{id}")
     int update(BookPost bookPost);
 
